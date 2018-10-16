@@ -1,0 +1,12 @@
+**/*.iml
+./android/.gradle
+./android/local.properties
+**/.idea/libraries
+**/.idea/modules.xml
+**/.idea/workspace.xml
+./android/.DS_Store
+./android/build
+./android/captures
+./android.externalNativeBuild
+**/bin/
+**/obj/
