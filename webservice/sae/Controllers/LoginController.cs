@@ -16,7 +16,7 @@ namespace sae.Controllers {
         public ActionResult<bool> login([FromBody] Credential credential) {
             string username = credential.Username;
             string password = credential.Password;
-            return username.Equals("johndoe") && password.Equals("test123");
+            return username.Equals("walia") && password.Equals("test123");
         }
     }
 }
