@@ -1,25 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    android:background="@android:color/white"
+    tools:context=".activities.MainActivity">
 
-    <include
-        layout="@layout/app_bar_main"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Subjective Answersheet Evaluator"
+            android:textColor="#212121"
+            android:textSize="40sp" />
 
-</android.support.v4.widget.DrawerLayout>
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/usernameEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:ems="13"
+            android:hint="Username"
+            android:textColor="#212121"
+            android:textColorHint="#D0D0D0" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/usernameEditText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
+            android:ems="13"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textColor="#212121"
+            android:textColorHint="#D0D0D0" />
+
+        <android.support.design.button.MaterialButton
+            android:id="@+id/loginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/passwordEditText"
+            android:layout_alignRight="@id/passwordEditText"
+            android:layout_below="@id/passwordEditText"
+            android:layout_marginTop="24dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Login"
+            android:theme="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
