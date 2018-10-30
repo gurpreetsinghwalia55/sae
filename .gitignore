@@ -10,3 +10,5 @@
 ./android.externalNativeBuild
 **/bin/
 **/obj/
+./sae_android_app/.idea/
+./sae_android_app/.gradle/
