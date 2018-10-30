@@ -7,6 +7,21 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_person_outline_black_24dp"
             android:title="Profile" />
+
+        <item
+            android:id="@+id/nav_exams"
+            android:icon="@drawable/ic_test"
+            android:title="Examinations" />
+
+        <item
+            android:id="@+id/nav_classes"
+            android:icon="@drawable/ic_class"
+            android:title="Classes" />
+
+        <item
+            android:id="@+id/nav_subjects"
+            android:icon="@drawable/ic_open_book"
+            android:title="Courses" />
     </group>
 
     <item android:title="Communicate">
