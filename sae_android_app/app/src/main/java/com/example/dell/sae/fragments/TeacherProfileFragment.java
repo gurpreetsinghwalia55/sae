@@ -38,7 +38,7 @@ public class TeacherProfileFragment extends Fragment {
 
         RecyclerView recentExamsRecyclerView = rootView.findViewById(R.id.recentExamsRecyclerView);
         recentExamsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        RecentExamsRecyclerViewAdapter adapter = new RecentExamsRecyclerViewAdapter();
+        RecentExamsRecyclerViewAdapter adapter = new RecentExamsRecyclerViewAdapter(getContext());
         recentExamsRecyclerView.setAdapter(adapter);
 
         return rootView;
