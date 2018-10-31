@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.dell.sae.R;
+import com.example.dell.sae.fragments.CoursesFragment;
+import com.example.dell.sae.fragments.ExamsFragment;
 import com.example.dell.sae.fragments.TeacherProfileFragment;
 
 public class TeacherActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -21,13 +23,14 @@ public class TeacherActivity extends AppCompatActivity implements NavigationView
     private FragmentManager fragmentManager;
     private Handler handler = new Handler();
     private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher);
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         drawerLayout = findViewById(R.id.drawerLayout);
 
@@ -77,6 +80,10 @@ public class TeacherActivity extends AppCompatActivity implements NavigationView
 
         if (id == R.id.nav_profile) {
             changeFragments(new TeacherProfileFragment());
+        } else if (id == R.id.nav_exams) {
+            changeFragments(new ExamsFragment());
+        } else if (id == R.id.nav_subjects) {
+            changeFragments(new CoursesFragment());
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

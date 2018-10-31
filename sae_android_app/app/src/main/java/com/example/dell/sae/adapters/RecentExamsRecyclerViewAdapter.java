@@ -14,9 +14,11 @@ import com.example.dell.sae.R;
 
 public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentExamsRecyclerViewAdapter.MyViewHolder> {
     private Context context;
+    private int count;
 
-    public RecentExamsRecyclerViewAdapter(Context context) {
+    public RecentExamsRecyclerViewAdapter(Context context, int count) {
         this.context = context;
+        this.count = count;
     }
 
     @NonNull
@@ -28,7 +30,7 @@ public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentE
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
         int resId = 0;
-        switch (i) {
+        switch (i % 5) {
             case 0:
                 holder.subjectNameTextView.setText("Artificial Intelligence");
                 holder.subjectCodeTextView.setText("UCS 521");
@@ -53,6 +55,22 @@ public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentE
                 holder.timeTextView.setText("1:00 PM");
                 resId = R.drawable.ic_se;
                 break;
+            case 3:
+                holder.subjectNameTextView.setText("Computer Architecture");
+                holder.subjectCodeTextView.setText("UCS 507");
+                holder.examTypeTextView.setText("MST");
+                holder.dateTextView.setText("25/09/18");
+                holder.timeTextView.setText("1:00 PM");
+                resId = R.drawable.ic_ca;
+                break;
+            case 4:
+                holder.subjectNameTextView.setText("Parallel and Distributed Computing");
+                holder.subjectCodeTextView.setText("UCS 608");
+                holder.examTypeTextView.setText("MST");
+                holder.dateTextView.setText("24/09/18");
+                holder.timeTextView.setText("1:00 PM");
+                resId = R.drawable.ic_cloud_computing;
+                break;
         }
 
         VectorDrawableCompat drawable = VectorDrawableCompat.create(context.getResources(), resId, context.getTheme());
@@ -61,7 +79,7 @@ public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentE
 
     @Override
     public int getItemCount() {
-        return 3;
+        return count;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

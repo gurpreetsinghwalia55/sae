@@ -2,7 +2,10 @@ package com.example.dell.sae.fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.example.dell.sae.R;
 import com.example.dell.sae.adapters.RecentExamsRecyclerViewAdapter;
@@ -38,8 +43,20 @@ public class TeacherProfileFragment extends Fragment {
 
         RecyclerView recentExamsRecyclerView = rootView.findViewById(R.id.recentExamsRecyclerView);
         recentExamsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        RecentExamsRecyclerViewAdapter adapter = new RecentExamsRecyclerViewAdapter(getContext());
+        RecentExamsRecyclerViewAdapter adapter = new RecentExamsRecyclerViewAdapter(getContext(), 3);
         recentExamsRecyclerView.setAdapter(adapter);
+
+        RelativeLayout seeMoreRow = rootView.findViewById(R.id.seeMoreRow);
+        seeMoreRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.teacher_fragment_container, new ExamsFragment());
+                fragmentTransaction.commit();
+                ((NavigationView) getActivity().findViewById(R.id.nav_view)).setCheckedItem(R.id.nav_exams);
+            }
+        });
 
         return rootView;
     }

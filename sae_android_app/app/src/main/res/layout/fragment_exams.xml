@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     tools:context=".fragments.TeacherProfileFragment">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.NoActionBar.AppBarOverlay"
-        android:layout_height="wrap_content">
+        android:theme="@style/AppTheme.NoActionBar.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
+            android:id="@+id/exams_toolbar"
             android:layout_width="match_parent"
-            android:id="@+id/teacher_profile_toolbar"
-            app:title="Gurpreet Singh Walia"
+            android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/AppTheme.NoActionBar.PopupTheme"
-            android:layout_height="?attr/actionBarSize" />
+            app:title="Examinations" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_fragment_teacher_profile" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/examsRecyclerView"
+        android:layout_width="match_parent"
+        android:fitsSystemWindows="true"
+        android:layout_marginTop="6dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="wrap_content" />
 
 </android.support.design.widget.CoordinatorLayout>
