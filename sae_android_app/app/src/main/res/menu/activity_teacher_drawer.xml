@@ -2,7 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/primaryGroup"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_person_outline_black_24dp"
@@ -14,24 +16,25 @@
             android:title="Examinations" />
 
         <item
-            android:id="@+id/nav_classes"
-            android:icon="@drawable/ic_class"
-            android:title="Classes" />
-
-        <item
             android:id="@+id/nav_subjects"
             android:icon="@drawable/ic_open_book"
             android:title="Courses" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_settings"
-                android:icon="@drawable/ic_settings_black_24dp"
-                android:title="Settings" />
+    <group
+        android:id="@+id/evaluateGroup"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_eval"
+            android:icon="@drawable/ic_check_form"
+            android:title="Evaluate" />
+    </group>
 
-        </menu>
-    </item>
+    <group android:id="@+id/settingsGroup">
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="Settings" />
+    </group>
 
 </menu>

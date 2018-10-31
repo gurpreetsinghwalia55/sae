@@ -1,53 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="8dp"
     android:background="?android:attr/selectableItemBackground"
-    android:clickable="true">
-
-    <ImageView
-        android:id="@+id/courseIcon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="24dp"
-        android:src="@drawable/ic_ai" />
+    android:clickable="true"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/complaintLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textLayout"
-        android:layout_toRightOf="@id/courseIcon"
-        android:layout_marginLeft="8dp"
-        android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Artificial Intelligence"
-            android:textSize="16sp"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+            android:layout_gravity="center"
+            android:layout_weight="2">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/subjectIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/ic_ai" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/textLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:text="UCS 521" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="6"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/subjectName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Artificial Intelligence"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/subjectCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="UCS 521" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2" />
 
     </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/classesRecyclerView"
+        android:layout_below="@id/complaintLayout"
+        android:layout_marginLeft="72dp"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_height="wrap_content" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginTop="16dp"
-        android:background="#E0E0E0"
-        android:layout_below="@id/textLayout"/>
+        android:layout_below="@id/classesRecyclerView"
+        android:layout_marginTop="12dp"
+        android:background="#E0E0E0" />
 
 </RelativeLayout>
