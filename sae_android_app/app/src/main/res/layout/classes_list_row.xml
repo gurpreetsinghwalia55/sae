@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="2dp"
     android:paddingRight="2dp"
     android:layout_marginRight="8dp"
-    android:background="#EEEEEE"
+    android:background="@drawable/course_chip_background"
     android:layout_height="wrap_content">
 
     <TextView
         android:layout_width="wrap_content"
-        android:text="COE 20 - 23"
+        android:text="3COE 20 - 23"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
         android:textColor="#23A24D"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         android:layout_height="wrap_content" />
 
 </RelativeLayout>

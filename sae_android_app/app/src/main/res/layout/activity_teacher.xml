@@ -32,6 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        app:itemBackground="@drawable/nav_item_background_selector"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_teacher"
         app:menu="@menu/activity_teacher_drawer" />

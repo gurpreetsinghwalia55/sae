@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/root"
+    android:layout_marginBottom="8dp"
     android:background="?android:attr/selectableItemBackground"
-    android:clickable="true"
     android:paddingTop="8dp">
 
     <LinearLayout
@@ -24,7 +24,8 @@
                 android:id="@+id/subjectIcon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:src="@drawable/ic_ai" />
@@ -44,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Artificial Intelligence"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="16sp" />
 
             <TextView
@@ -54,31 +55,38 @@
                 android:layout_marginTop="4dp"
                 android:text="UCS 521" />
 
+            <TextView
+                android:id="@+id/examType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="MST" />
+
         </LinearLayout>
 
-        <ImageView
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="2" />
+            android:layout_marginRight="16dp"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18/10/18" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="1:00 PM" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/classesRecyclerView"
-        android:layout_below="@id/complaintLayout"
-        android:layout_marginLeft="72dp"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_height="wrap_content" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_below="@id/classesRecyclerView"
-        android:layout_marginLeft="72dp"
-        android:layout_marginTop="12dp"
-        android:background="#E0E0E0" />
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.dell.sae.activities;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -84,6 +85,8 @@ public class TeacherActivity extends AppCompatActivity implements NavigationView
             changeFragments(new ExamsFragment());
         } else if (id == R.id.nav_subjects) {
             changeFragments(new CoursesFragment());
+        } else if (id == R.id.nav_eval) {
+            startActivity(new Intent(this, EvaluateExamActivity.class));
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

@@ -18,6 +18,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
+            android:noHistory="true"
             android:theme="@style/AppTheme.LoginTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +26,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.TeacherActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".activities.TeacherActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.EvaluateExamActivity"
+            android:label="@string/title_activity_evaluate_exam"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
