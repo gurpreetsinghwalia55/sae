@@ -11,10 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dell.sae.R;
+import com.example.dell.sae.callbacks.ExamsListItemClickCallback;
 
 public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentExamsRecyclerViewAdapter.MyViewHolder> {
     private Context context;
     private int count;
+    private ExamsListItemClickCallback callback;
 
     public RecentExamsRecyclerViewAdapter(Context context, int count) {
         this.context = context;
@@ -82,6 +84,10 @@ public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentE
         return count;
     }
 
+    public void setOnItemClickCallback(ExamsListItemClickCallback callback) {
+        this.callback = callback;
+    }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView subjectIconImageView;
         TextView subjectNameTextView, subjectCodeTextView, examTypeTextView, dateTextView, timeTextView;
@@ -93,6 +99,14 @@ public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentE
             examTypeTextView = itemView.findViewById(R.id.examType);
             dateTextView = itemView.findViewById(R.id.date);
             timeTextView = itemView.findViewById(R.id.time);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (callback != null) {
+                        callback.onItemClick("Hello");
+                    }
+                }
+            });
         }
     }
 }

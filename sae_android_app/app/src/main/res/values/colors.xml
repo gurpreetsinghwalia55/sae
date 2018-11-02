@@ -8,4 +8,11 @@
     <color name="foreground_material_light">#fefdfd</color>
     <color name="primary_material_light">#6200ee</color>
     <color name="black">#fcfafa</color>
+    <color name="orange">#F7941E</color>
+    <color name="lightBlue">#4ECDE6</color>
+    <color name="pink">#FF63B8</color>
+    <color name="red">#EF5350</color>
+    <color name="green">#66BB6A</color>
+    <color name="yellow">#FBC02D</color>
+    <color name="violet">#AB47BC</color>
 </resources>

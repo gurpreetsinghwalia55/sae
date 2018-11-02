@@ -1,6 +1,7 @@
 package com.example.dell.sae.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -17,9 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.dell.sae.R;
+import com.example.dell.sae.activities.EvaluationDetailActivity;
 import com.example.dell.sae.adapters.RecentExamsRecyclerViewAdapter;
+import com.example.dell.sae.callbacks.ExamsListItemClickCallback;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +49,12 @@ public class TeacherProfileFragment extends Fragment {
         recentExamsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         RecentExamsRecyclerViewAdapter adapter = new RecentExamsRecyclerViewAdapter(getContext(), 3);
         recentExamsRecyclerView.setAdapter(adapter);
+        adapter.setOnItemClickCallback(new ExamsListItemClickCallback() {
+            @Override
+            public void onItemClick(String exam) {
+                startActivity(new Intent(getContext(), EvaluationDetailActivity.class));
+            }
+        });
 
         RelativeLayout seeMoreRow = rootView.findViewById(R.id.seeMoreRow);
         seeMoreRow.setOnClickListener(new View.OnClickListener() {
