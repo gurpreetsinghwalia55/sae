@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 
 import com.emilsjolander.components.StickyScrollViewItems.StickyScrollView;
 
-public class MyNestedScrollView extends StickyScrollView {
+public class MyNestedScrollView extends NestedScrollView {
     private GestureDetector mGestureDetector;
 
     public MyNestedScrollView(Context context, AttributeSet attrs) {

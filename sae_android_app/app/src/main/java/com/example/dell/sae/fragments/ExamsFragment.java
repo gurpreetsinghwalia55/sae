@@ -1,6 +1,7 @@
 package com.example.dell.sae.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -14,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.dell.sae.R;
+import com.example.dell.sae.activities.EvaluationDetailActivity;
 import com.example.dell.sae.adapters.RecentExamsRecyclerViewAdapter;
+import com.example.dell.sae.callbacks.ExamsListItemClickCallback;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +46,13 @@ public class ExamsFragment extends Fragment {
         examsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         RecentExamsRecyclerViewAdapter adapter = new RecentExamsRecyclerViewAdapter(getContext(), 12);
         examsRecyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickCallback(new ExamsListItemClickCallback() {
+            @Override
+            public void onItemClick(String exam) {
+                startActivity(new Intent(getContext(), EvaluationDetailActivity.class));
+            }
+        });
 
         return rootView;
     }
