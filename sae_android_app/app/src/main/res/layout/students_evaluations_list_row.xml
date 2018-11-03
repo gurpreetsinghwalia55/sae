@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <com.github.akashandroid90.imageletter.MaterialLetterIcon
         android:id="@+id/studentIcon"
-        android:layout_width="40dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_centerVertical="true"
+        android:layout_gravity="center"
         android:layout_margin="16dp"
+        android:layout_weight="1.5"
         app:letter="G"
         app:letter_color="@android:color/white"
         app:shape_color="#F7941E" />
 
     <LinearLayout
         android:id="@+id/textLayout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/uploadIcon"
-        android:layout_toRightOf="@id/studentIcon"
+        android:layout_gravity="center"
+        android:layout_weight="6"
         android:orientation="vertical">
 
         <TextView
@@ -51,23 +52,15 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:id="@+id/uploadIcon"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_file_upload_black_24dp" />
+    <TextView
+        android:id="@+id/marks"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:text="16/25"
+        android:textColor="@color/orange"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="2.5" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_alignStart="@id/textLayout"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="#E0E0E0" />
-
-</RelativeLayout>
+</LinearLayout>

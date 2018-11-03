@@ -33,7 +33,9 @@
             android:name=".activities.EvaluateExamActivity"
             android:label="@string/title_activity_evaluate_exam"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.EvaluationDetailActivity"></activity>
+        <activity
+            android:name=".activities.EvaluationDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
