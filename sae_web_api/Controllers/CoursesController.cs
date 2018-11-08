@@ -10,11 +10,11 @@ namespace sae_web_api.Controllers
 
     public class CoursesController : ControllerBase
     {
-        [HttpGet("courseslist/{code}")]
-        public ActionResult<List<Courses>> GetCourses(int code)
+        [HttpGet("teacher/{code}")]
+        public ActionResult<List<TeacherCourse>> GetCourses(int code)
         {
-            var dao = new CoursesDao();
-            return dao.GetCourses(code);
+            var dao = new TeacherCoursesDao();
+            return dao.GetTeacherCourses(code);
         }
     }
 }

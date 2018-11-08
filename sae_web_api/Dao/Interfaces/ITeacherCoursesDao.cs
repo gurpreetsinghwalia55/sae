@@ -4,8 +4,8 @@ using sae_web_api.Models;
 
 namespace sae_web_api.Dao.Interfaces
 {
-    public interface ICoursesDao
+    public interface ITeacherCoursesDao
     {
-        List<Courses> GetCourses(int code);
+        List<TeacherCourse> GetTeacherCourses(int tid);
     }
 }
