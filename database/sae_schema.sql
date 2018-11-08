@@ -15,7 +15,7 @@ CREATE TABLE "teachers" (
 	"teacher_code" VARCHAR(10) NOT NULL,
 	"teacher_name" VARCHAR(40) NOT NULL,
 	"designation" VARCHAR(40) NOT NULL,
-	"contact" integer NOT NULL UNIQUE,
+	"contact" varchar(10) NOT NULL UNIQUE,
 	"email" VARCHAR(60) NOT NULL UNIQUE,
 	CONSTRAINT teachers_pk PRIMARY KEY ("id")
 ) WITH (
@@ -33,16 +33,6 @@ CREATE TABLE "courses" (
   OIDS=FALSE
 );
 
-
-drop table if exists "teacher_courses";
-CREATE TABLE "teacher_courses" (
-	"id" serial NOT NULL,
-	"teacher_id" integer NOT NULL UNIQUE,
-	"course_id" integer NOT NULL UNIQUE,
-	CONSTRAINT teacher_courses_pk PRIMARY KEY ("id")
-) WITH (
-  OIDS=FALSE
-);
 
 
 drop table if exists "classes";
@@ -63,6 +53,7 @@ CREATE TABLE "teacher_classes" (
 	"id" serial NOT NULL,
 	"teacher_id" integer NOT NULL,
 	"class_id" integer NOT NULL,
+  "course_id" integer NOT NULL,
 	CONSTRAINT teacher_classes_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -125,6 +116,7 @@ CREATE TABLE "evaluations" (
 	"marks_obtained" integer NOT NULL,
 	"datetime" TIMESTAMP NOT NULL,
 	"ans_sheet" VARCHAR(100) NOT NULL,
+  "status" boolean NOT NULL,
 	CONSTRAINT evaluations_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -133,12 +125,6 @@ CREATE TABLE "evaluations" (
 
 
 ALTER TABLE "logins" ADD CONSTRAINT "logins_fk0" FOREIGN KEY ("teacher_id") REFERENCES "teachers"("id");
-
-
-
-ALTER TABLE "teacher_courses" ADD CONSTRAINT "teacher_courses_fk0" FOREIGN KEY ("teacher_id") REFERENCES "teachers"("id");
-ALTER TABLE "teacher_courses" ADD CONSTRAINT "teacher_courses_fk1" FOREIGN KEY ("course_id") REFERENCES "courses"("id");
-
 
 ALTER TABLE "teacher_classes" ADD CONSTRAINT "teacher_classes_fk0" FOREIGN KEY ("teacher_id") REFERENCES "teachers"("id");
 ALTER TABLE "teacher_classes" ADD CONSTRAINT "teacher_classes_fk1" FOREIGN KEY ("class_id") REFERENCES "classes"("id");
@@ -156,3 +142,7 @@ ALTER TABLE "evaluations" ADD CONSTRAINT "evaluations_fk0" FOREIGN KEY ("exam_id
 ALTER TABLE "evaluations" ADD CONSTRAINT "evaluations_fk1" FOREIGN KEY ("teacher_id") REFERENCES "teachers"("id");
 ALTER TABLE "evaluations" ADD CONSTRAINT "evaluations_fk2" FOREIGN KEY ("student_id") REFERENCES "students"("id");
 
+ALTER TABLE "student_courses" DROP CONSTRAINT "student_courses_student_id_key";
+ALTER TABLE "student_courses" DROP CONSTRAINT "student_courses_course_id_key";
+
+ALTER TABLE "teacher_classes" ADD CONSTRAINT "teacher_classes_fk_course" FOREIGN KEY ("course_id") REFERENCES "courses"("id");

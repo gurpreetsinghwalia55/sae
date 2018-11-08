@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace sae
+namespace sae_web_api
 {
     public class Startup
     {
@@ -40,6 +40,7 @@ namespace sae
                 app.UseHsts();
             }
 
+//            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

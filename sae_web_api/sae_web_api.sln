@@ -1,0 +1,13 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sae_web_api", "sae_web_api.csproj", "{625C1C66-DCD3-42AE-AE86-C1AF1ED1B2E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		|Any CPU = |Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{625C1C66-DCD3-42AE-AE86-C1AF1ED1B2E5}.|Any CPU.ActiveCfg = |Any CPU
+		{625C1C66-DCD3-42AE-AE86-C1AF1ED1B2E5}.|Any CPU.Build.0 = |Any CPU
+	EndGlobalSection
+EndGlobal
