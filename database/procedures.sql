@@ -51,38 +51,7 @@ language plpgsql
 strict
 immutable;
 
---Teacher Examination list
-drop function if exists teacherExaminationList;
-create or replace function teacherExaminationList(_code varchar)
-  returns table(
-    id     integer,
-    cid    integer,
-    cname  varchar,
-    ccode  varchar,
-    etype  varchar,
-    dt     timestamp,
-    tmarks int
-  ) as $$
-begin
-  return query select examinations.id,
-                      examinations.course_id,
-                      courses.course_name,
-                      courses.course_code,
-                      examinations.exam_type,
-                      examinations.datetime,
-                      examinations.total_marks
-               from (((teachers INNER JOIN teacher_classes ON teachers.id = teacher_classes.id) INNER JOIN courses ON
-                 courses.id = teacher_classes.id) INNER JOIN examinations ON courses.id = examinations.course_id)
-               where teachers.teacher_code = _code;
-end;
-$$
-language plpgsql;
-
--- for insertion and checking
-select *
-from teacherExaminationList('500');
-
---------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------
 
 drop function if exists coursesList;
 create or replace function coursesList(_id int)
@@ -101,6 +70,31 @@ $$
 language plpgsql;
 
 --------------------------------------------------------------------------------------------------------------------------------------
+
+drop function if exists teacherExaminationList;
+create or replace function teacherExaminationList(_tid int, _len int)
+  returns table(
+    id     int,
+    c_id    int,
+    etype  varchar,
+    dt     timestamp,
+    tmarks int,
+    rans   character varying,
+    cname  varchar,
+    ccode  varchar
+  ) as $$
+begin
+  if _len = 0 then
+    return query select e.*, c.course_name, c.course_code from examinations as e, courses as c where e.course_id = c.id and course_id in (select cid from courseslist(_tid)) order by e.datetime desc;
+  else
+    return query select e.*, c.course_name, c.course_code from examinations as e, courses as c where e.course_id = c.id and course_id in (select cid from courseslist(_tid)) order by e.datetime desc limit _len;
+  end if;
+
+end;
+$$
+language plpgsql;
+
+--------------------------------------------------------------------------------------------------------------------------------
 
 drop function if exists getClassesByTeacherAndCourse;
 create or replace function getClassesByTeacherAndCourse(_tid int, _cid int)

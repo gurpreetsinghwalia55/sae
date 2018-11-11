@@ -12,76 +12,62 @@ import android.widget.TextView;
 
 import com.example.dell.sae.R;
 import com.example.dell.sae.callbacks.ExamsListItemClickCallback;
+import com.example.dell.sae.models.Examination;
+
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentExamsRecyclerViewAdapter.MyViewHolder> {
     private Context context;
-    private int count;
+    private List<Examination> examinations;
     private ExamsListItemClickCallback callback;
 
-    public RecentExamsRecyclerViewAdapter(Context context, int count) {
-        this.context = context;
-        this.count = count;
+    public RecentExamsRecyclerViewAdapter(List<Examination> examinations) {
+        this.examinations = examinations;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new MyViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recent_exams_list_row, viewGroup, false));
+        this.context = viewGroup.getContext();
+        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.recent_exams_list_row, viewGroup, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
+        Examination examination = examinations.get(i);
+        holder.subjectNameTextView.setText(examination.getCourse().getCourseName());
+        holder.subjectCodeTextView.setText(examination.getCourse().getCourseCode());
+        holder.examTypeTextView.setText(examination.getExaminationType());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
+        holder.dateTextView.setText(dateFormat.format(examination.getDateTime()));
+        holder.timeTextView.setText(timeFormat.format(examination.getDateTime()));
         int resId = 0;
-        switch (i % 5) {
-            case 0:
-                holder.subjectNameTextView.setText("Artificial Intelligence");
-                holder.subjectCodeTextView.setText("UCS 521");
-                holder.examTypeTextView.setText("MST");
-                holder.dateTextView.setText("29/09/18");
-                holder.timeTextView.setText("1:00 PM");
-                resId = R.drawable.ic_ai;
-                break;
-            case 1:
-                holder.subjectNameTextView.setText("Advanced Data Structures");
-                holder.subjectCodeTextView.setText("UCS 616");
-                holder.examTypeTextView.setText("MST");
-                holder.dateTextView.setText("28/09/18");
-                holder.timeTextView.setText("1:00 PM");
-                resId = R.drawable.ic_ads;
-                break;
-            case 2:
-                holder.subjectNameTextView.setText("Software Engineering");
-                holder.subjectCodeTextView.setText("UCS 503");
-                holder.examTypeTextView.setText("MST");
-                holder.dateTextView.setText("26/09/18");
-                holder.timeTextView.setText("1:00 PM");
-                resId = R.drawable.ic_se;
-                break;
-            case 3:
-                holder.subjectNameTextView.setText("Computer Architecture");
-                holder.subjectCodeTextView.setText("UCS 507");
-                holder.examTypeTextView.setText("MST");
-                holder.dateTextView.setText("25/09/18");
-                holder.timeTextView.setText("1:00 PM");
-                resId = R.drawable.ic_ca;
-                break;
-            case 4:
-                holder.subjectNameTextView.setText("Parallel and Distributed Computing");
-                holder.subjectCodeTextView.setText("UCS 608");
-                holder.examTypeTextView.setText("MST");
-                holder.dateTextView.setText("24/09/18");
-                holder.timeTextView.setText("1:00 PM");
+        switch (examination.getCourse().getCourseCode()) {
+            case "UCS608":
                 resId = R.drawable.ic_cloud_computing;
                 break;
+            case "UCS616":
+                resId = R.drawable.ic_ads;
+                break;
+            case "UCS503":
+                resId = R.drawable.ic_se;
+                break;
+            case "UCS507":
+                resId = R.drawable.ic_ca;
+                break;
+            case "UCS521":
+                resId = R.drawable.ic_ai;
+                break;
         }
-
         VectorDrawableCompat drawable = VectorDrawableCompat.create(context.getResources(), resId, context.getTheme());
         holder.subjectIconImageView.setImageDrawable(drawable);
     }
 
     @Override
     public int getItemCount() {
-        return count;
+        return examinations.size();
     }
 
     public void setOnItemClickCallback(ExamsListItemClickCallback callback) {
@@ -91,6 +77,7 @@ public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentE
     class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView subjectIconImageView;
         TextView subjectNameTextView, subjectCodeTextView, examTypeTextView, dateTextView, timeTextView;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             subjectIconImageView = itemView.findViewById(R.id.subjectIcon);

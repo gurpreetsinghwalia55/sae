@@ -100,7 +100,7 @@ CREATE TABLE "examinations" (
 	"exam_type" VARCHAR(10) NOT NULL,
 	"datetime" TIMESTAMP NOT NULL,
 	"total_marks" integer NOT NULL,
-	"ref_ans_sheet" VARCHAR(100) NOT NULL UNIQUE,
+	"ref_ans_sheet" VARCHAR(100),
 	CONSTRAINT examinations_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -115,7 +115,7 @@ CREATE TABLE "evaluations" (
 	"student_id" integer NOT NULL,
 	"marks_obtained" integer NOT NULL,
 	"datetime" TIMESTAMP NOT NULL,
-	"ans_sheet" VARCHAR(100) NOT NULL,
+	"ans_sheet" text NOT NULL,
   "status" boolean NOT NULL,
 	CONSTRAINT evaluations_pk PRIMARY KEY ("id")
 ) WITH (
@@ -146,3 +146,5 @@ ALTER TABLE "student_courses" DROP CONSTRAINT "student_courses_student_id_key";
 ALTER TABLE "student_courses" DROP CONSTRAINT "student_courses_course_id_key";
 
 ALTER TABLE "teacher_classes" ADD CONSTRAINT "teacher_classes_fk_course" FOREIGN KEY ("course_id") REFERENCES "courses"("id");
+
+ALTER TABLE "teachers" ADD CONSTRAINT "teachers_uk_code" UNIQUE ("teacher_code");

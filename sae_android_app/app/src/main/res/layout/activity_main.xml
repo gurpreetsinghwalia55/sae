@@ -29,6 +29,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="24dp"
             android:ems="13"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            android:nextFocusForward="@id/passwordEditText"
             android:hint="Username"
             android:textColor="#212121"
             android:textColorHint="#D0D0D0" />
@@ -42,6 +46,7 @@
             android:layout_marginTop="24dp"
             android:ems="13"
             android:hint="Password"
+            android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:textColor="#212121"
             android:textColorHint="#D0D0D0" />
@@ -58,6 +63,18 @@
             android:focusable="true"
             android:text="Login"
             android:theme="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_below="@id/loginButton"
+            android:layout_alignStart="@id/loginButton"
+            android:layout_alignLeft="@id/loginButton"
+            android:layout_alignRight="@id/loginButton"
+            android:layout_alignEnd="@id/loginButton"
+            android:id="@+id/loginProgressBar"
+            android:indeterminate="true"
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
+    android:id="@+id/profileNsv"
     android:fitsSystemWindows="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -37,7 +38,6 @@
                     android:id="@+id/email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="gwalia60_be17@thapar.edu"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:textColor="?android:attr/textColorPrimary"
                     android:textSize="16sp" />
@@ -76,7 +76,6 @@
                     android:id="@+id/contact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+919876034501"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:textColor="?android:attr/textColorPrimary"
                     android:textSize="16sp" />
@@ -115,7 +114,6 @@
                     android:id="@+id/designation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Assistant Professor"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                     android:textColor="?android:attr/textColorPrimary"
                     android:textSize="16sp" />
@@ -148,11 +146,26 @@
             android:textSize="11sp"
             android:textStyle="bold" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recentExamsRecyclerView"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false" />
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="16dp"
+                android:id="@+id/recentExamsProgressBar"
+                android:indeterminate="true"
+                android:indeterminateTint="?colorPrimary"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recentExamsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/seeMoreRow"

@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
+    android:animateLayoutChanges="true"
     tools:context=".fragments.TeacherProfileFragment">
 
     <android.support.design.widget.AppBarLayout
@@ -16,12 +17,19 @@
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:id="@+id/teacher_profile_toolbar"
-            app:title="Gurpreet Singh Walia"
             app:popupTheme="@style/AppTheme.NoActionBar.PopupTheme"
             android:layout_height="?attr/actionBarSize" />
 
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_fragment_teacher_profile" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="?colorPrimary"
+        android:id="@+id/profileProgressBar"
+        android:layout_height="wrap_content" />
 
 </android.support.design.widget.CoordinatorLayout>

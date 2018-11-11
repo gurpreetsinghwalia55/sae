@@ -18,6 +18,9 @@ import com.example.dell.sae.R;
 import com.example.dell.sae.activities.EvaluationDetailActivity;
 import com.example.dell.sae.adapters.RecentExamsRecyclerViewAdapter;
 import com.example.dell.sae.callbacks.ExamsListItemClickCallback;
+import com.example.dell.sae.models.Examination;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,7 +47,7 @@ public class ExamsFragment extends Fragment {
 
         RecyclerView examsRecyclerView = rootView.findViewById(R.id.examsRecyclerView);
         examsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        RecentExamsRecyclerViewAdapter adapter = new RecentExamsRecyclerViewAdapter(getContext(), 12);
+        RecentExamsRecyclerViewAdapter adapter = new RecentExamsRecyclerViewAdapter(new ArrayList<Examination>());
         examsRecyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickCallback(new ExamsListItemClickCallback() {
