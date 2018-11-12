@@ -36,6 +36,8 @@ import com.example.dell.sae.models.Teacher;
 import com.example.dell.sae.services.ExaminationsService;
 import com.example.dell.sae.services.TeachersService;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 /**
@@ -62,6 +64,7 @@ public class TeacherProfileFragment extends Fragment {
 
         // Applying Action Bar
         Toolbar toolbar = rootView.findViewById(R.id.teacher_profile_toolbar);
+        toolbar.setTitle(" ");
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawerLayout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -119,8 +122,10 @@ public class TeacherProfileFragment extends Fragment {
                 recentExamsProgressBar.setVisibility(View.GONE);
                 examsAdapter.setOnItemClickCallback(new ExamsListItemClickCallback() {
                     @Override
-                    public void onItemClick(String exam) {
-                        startActivity(new Intent(getContext(), EvaluationDetailActivity.class));
+                    public void onItemClick(Examination exam) {
+                        Intent intent = new Intent(getContext(), EvaluationDetailActivity.class);
+                        intent.putExtra(Constants.EXTRA_EXAMINATION, Parcels.wrap(exam));
+                        startActivity(intent);
                     }
                 });
 

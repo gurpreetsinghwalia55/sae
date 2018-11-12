@@ -21,13 +21,12 @@
             android:background="#EEEEEE">
 
             <TextView
+                android:id="@+id/status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
-                android:text="Evaluated"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                android:textColor="#23A24D" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
         </RelativeLayout>
 
@@ -65,7 +64,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="UCS 503"
+                        android:id="@+id/subjectCode"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                         android:textSize="16sp" />
 
@@ -102,7 +101,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="MST"
+                        android:id="@+id/examType"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                         android:textSize="16sp" />
 
@@ -147,7 +146,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="26 Sep, 2018"
+                        android:id="@+id/date"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                         android:textSize="16sp" />
 
@@ -184,7 +183,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1:00 PM"
+                        android:id="@+id/time"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                         android:textSize="16sp" />
 

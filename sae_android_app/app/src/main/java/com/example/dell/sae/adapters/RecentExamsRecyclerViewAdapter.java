@@ -36,7 +36,7 @@ public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentE
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
-        Examination examination = examinations.get(i);
+        final Examination examination = examinations.get(i);
         holder.subjectNameTextView.setText(examination.getCourse().getCourseName());
         holder.subjectCodeTextView.setText(examination.getCourse().getCourseCode());
         holder.examTypeTextView.setText(examination.getExaminationType());
@@ -72,6 +72,15 @@ public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentE
             holder.evalStatus.setText("Pending");
             holder.evalStatus.setTextColor(ContextCompat.getColor(context, R.color.red));
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (callback != null) {
+                    callback.onItemClick(examination);
+                }
+            }
+        });
     }
 
     @Override
@@ -86,9 +95,11 @@ public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentE
     class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView subjectIconImageView;
         TextView subjectNameTextView, subjectCodeTextView, examTypeTextView, dateTextView, timeTextView, evalStatus;
+        View itemView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            this.itemView = itemView;
             subjectIconImageView = itemView.findViewById(R.id.subjectIcon);
             subjectNameTextView = itemView.findViewById(R.id.subjectName);
             subjectCodeTextView = itemView.findViewById(R.id.subjectCode);
@@ -96,14 +107,6 @@ public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentE
             dateTextView = itemView.findViewById(R.id.date);
             timeTextView = itemView.findViewById(R.id.time);
             evalStatus = itemView.findViewById(R.id.evalStatus);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (callback != null) {
-                        callback.onItemClick("Hello");
-                    }
-                }
-            });
         }
     }
 }

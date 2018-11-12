@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using sae_web_api.Dao.Interfaces;
@@ -30,6 +31,33 @@ namespace sae_web_api.Dao.Impl
                 }
 
                 return null;
+            }
+        }
+
+        public List<Class> GetClassesByTeacherAndCourse(int tid, int cid)
+        {
+            using (var classConnection = SqlConnectionManager.GetConnection())
+            using (var classCommand = new NpgsqlCommand())
+            {
+                classCommand.Connection = classConnection;
+                classCommand.CommandText = "select * from getClassesByTeacherAndCourse(@tid, @cid)";
+                classCommand.Parameters.AddWithValue("@tid", tid);
+                classCommand.Parameters.AddWithValue("@cid", cid);
+                var classReader = classCommand.ExecuteReader();
+                var classes = new List<Class>();
+                while (classReader.Read())
+                {
+                    classes.Add(new Class()
+                    {
+                        Id = int.Parse(classReader["id"].ToString()),
+                        Branch = classReader["branch"].ToString(),
+                        Year = int.Parse(classReader["year"].ToString()),
+                        SectionFrom = int.Parse(classReader["sec_from"].ToString()),
+                        SectionTo = int.Parse(classReader["sec_to"].ToString())
+                    });
+                }
+
+                return classes;
             }
         }
     }

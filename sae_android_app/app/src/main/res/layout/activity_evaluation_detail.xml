@@ -28,4 +28,12 @@
         android:layout_gravity="bottom"
         android:background="#E0E0E0" />
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:id="@+id/evaluationDetailProgressBar"
+        android:layout_gravity="center"
+        android:indeterminateTint="?colorPrimary"
+        android:indeterminate="true"
+        android:layout_height="wrap_content" />
+
 </android.support.design.widget.CoordinatorLayout>

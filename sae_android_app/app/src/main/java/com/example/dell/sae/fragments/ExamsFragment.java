@@ -29,6 +29,8 @@ import com.example.dell.sae.models.Teacher;
 import com.example.dell.sae.services.ExaminationsService;
 import com.example.dell.sae.services.TeachersService;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,8 +100,10 @@ public class ExamsFragment extends Fragment {
 
                 adapter.setOnItemClickCallback(new ExamsListItemClickCallback() {
                     @Override
-                    public void onItemClick(String exam) {
-                        startActivity(new Intent(getContext(), EvaluationDetailActivity.class));
+                    public void onItemClick(Examination exam) {
+                        Intent intent = new Intent(getContext(), EvaluationDetailActivity.class);
+                        intent.putExtra(Constants.EXTRA_EXAMINATION, Parcels.wrap(exam));
+                        startActivity(intent);
                     }
                 });
 
