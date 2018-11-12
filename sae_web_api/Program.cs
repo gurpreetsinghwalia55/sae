@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace sae_web_api
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseUrls("http://localhost:5000/", "http://192.168.100.11:5000/")
+                .UseUrls("http://localhost:5000/", "http://192.168.43.195:5000/")
                 .UseStartup<Startup>();
     }
 }
