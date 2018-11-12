@@ -12,9 +12,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dell.sae.R;
+import com.example.dell.sae.models.TeacherCourse;
+
+import java.util.List;
 
 public class CoursesRecyclerViewAdapter extends RecyclerView.Adapter<CoursesRecyclerViewAdapter.MyViewHolder> {
+
     private Context context;
+    private List<TeacherCourse> teacherCourses;
+
+    public CoursesRecyclerViewAdapter(List<TeacherCourse> teacherCourses) {
+        this.teacherCourses = teacherCourses;
+    }
 
     @NonNull
     @Override
@@ -25,53 +34,50 @@ public class CoursesRecyclerViewAdapter extends RecyclerView.Adapter<CoursesRecy
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
+        TeacherCourse course = teacherCourses.get(i);
+
+        holder.subjectName.setText(course.getCourse().getCourseName());
+        holder.subjectCode.setText(course.getCourse().getCourseCode());
+
         int resId = 0;
-        switch (i % 5) {
-            case 0:
-                holder.subjectName.setText("Advanced Data Structures");
-                holder.subjectCode.setText("UCS 616");
-                resId = R.drawable.ic_ads;
-                break;
-            case 1:
-                holder.subjectName.setText("Computer Architecture");
-                holder.subjectCode.setText("UCS 507");
-                resId = R.drawable.ic_ca;
-                break;
-            case 2:
-                holder.subjectName.setText("Parallel and Distributed Computing");
-                holder.subjectCode.setText("UCS 608");
+        switch (course.getCourse().getCourseCode()) {
+            case "UCS608":
                 resId = R.drawable.ic_cloud_computing;
                 break;
-            case 3:
-                holder.subjectName.setText("Artificial Intelligence");
-                holder.subjectCode.setText("UCS 521");
-                resId = R.drawable.ic_ai;
+            case "UCS616":
+                resId = R.drawable.ic_ads;
                 break;
-            case 4:
-                holder.subjectName.setText("Software Engineering");
-                holder.subjectCode.setText("UCS 503");
+            case "UCS503":
                 resId = R.drawable.ic_se;
                 break;
+            case "UCS507":
+                resId = R.drawable.ic_ca;
+                break;
+            case "UCS521":
+                resId = R.drawable.ic_ai;
+                break;
         }
+
         VectorDrawableCompat drawable = VectorDrawableCompat.create(context.getResources(), resId, context.getTheme());
         holder.subjectIcon.setImageDrawable(drawable);
+
+        holder.classesRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        holder.classesRecyclerView.setAdapter(new ClassesRecyclerViewAdapter(course.getClasses()));
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return teacherCourses.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         RecyclerView classesRecyclerView;
         TextView subjectName, subjectCode;
         ImageView subjectIcon;
+
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
             classesRecyclerView = itemView.findViewById(R.id.classesRecyclerView);
-            classesRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            classesRecyclerView.setAdapter(new ClassesRecyclerViewAdapter());
-
             subjectName = itemView.findViewById(R.id.subjectName);
             subjectCode = itemView.findViewById(R.id.subjectCode);
             subjectIcon = itemView.findViewById(R.id.subjectIcon);

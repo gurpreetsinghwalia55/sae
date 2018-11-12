@@ -14,7 +14,7 @@ namespace sae_web_api.Controllers
         public ActionResult<List<Examination>> GetExaminationListByTeacherCode(int id, [FromQuery(Name = "len")] int len)
         {
             var dao = new ExaminationsDao();
-            return dao.GetExaminationListByTeacherCode(id, len);
+            return dao.GetExaminationListByTeacher(id, len);
         }
     }
 }

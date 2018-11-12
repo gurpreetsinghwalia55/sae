@@ -117,14 +117,14 @@ public class TeacherProfileFragment extends Fragment {
                 recentExamsRecyclerView.setVisibility(View.VISIBLE);
                 seeMoreRow.setVisibility(View.VISIBLE);
                 recentExamsProgressBar.setVisibility(View.GONE);
-                /*examsAdapter.setOnItemClickCallback(new ExamsListItemClickCallback() {
+                examsAdapter.setOnItemClickCallback(new ExamsListItemClickCallback() {
                     @Override
                     public void onItemClick(String exam) {
                         startActivity(new Intent(getContext(), EvaluationDetailActivity.class));
                     }
-                });*/
+                });
 
-                /*seeMoreRow.setOnClickListener(new View.OnClickListener() {
+                seeMoreRow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -133,7 +133,7 @@ public class TeacherProfileFragment extends Fragment {
                         fragmentTransaction.commit();
                         ((NavigationView) getActivity().findViewById(R.id.nav_view)).setCheckedItem(R.id.nav_exams);
                     }
-                });*/
+                });
             }
 
             @Override

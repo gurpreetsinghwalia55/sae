@@ -77,9 +77,8 @@
                         android:layout_width="wrap_content"
                         android:paddingLeft="2dp"
                         android:paddingRight="2dp"
-                        android:text="Evaluated"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                        android:textColor="#23A24D"
+                        android:id="@+id/evalStatus"
                         android:layout_height="wrap_content" />
 
                 </RelativeLayout>

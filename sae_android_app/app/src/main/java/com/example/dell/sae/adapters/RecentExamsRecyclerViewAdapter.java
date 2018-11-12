@@ -3,6 +3,7 @@ package com.example.dell.sae.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +64,14 @@ public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentE
         }
         VectorDrawableCompat drawable = VectorDrawableCompat.create(context.getResources(), resId, context.getTheme());
         holder.subjectIconImageView.setImageDrawable(drawable);
+
+        if (examination.getEvaluationStatus()) {
+            holder.evalStatus.setText("Evaluated");
+            holder.evalStatus.setTextColor(ContextCompat.getColor(context, R.color.green));
+        } else {
+            holder.evalStatus.setText("Pending");
+            holder.evalStatus.setTextColor(ContextCompat.getColor(context, R.color.red));
+        }
     }
 
     @Override
@@ -76,7 +85,7 @@ public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentE
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView subjectIconImageView;
-        TextView subjectNameTextView, subjectCodeTextView, examTypeTextView, dateTextView, timeTextView;
+        TextView subjectNameTextView, subjectCodeTextView, examTypeTextView, dateTextView, timeTextView, evalStatus;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,6 +95,7 @@ public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentE
             examTypeTextView = itemView.findViewById(R.id.examType);
             dateTextView = itemView.findViewById(R.id.date);
             timeTextView = itemView.findViewById(R.id.time);
+            evalStatus = itemView.findViewById(R.id.evalStatus);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

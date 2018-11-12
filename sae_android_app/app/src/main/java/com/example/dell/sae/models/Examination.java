@@ -13,6 +13,16 @@ public class Examination {
     int totalMarks;
     String referenceAnswerSheet;
 
+    public boolean getEvaluationStatus() {
+        return evaluationStatus;
+    }
+
+    public void setEvaluationStatus(boolean evaluationStatus) {
+        this.evaluationStatus = evaluationStatus;
+    }
+
+    boolean evaluationStatus;
+
     public int getId() {
         return id;
     }

@@ -6,6 +6,6 @@ namespace sae_web_api.Dao.Interfaces
 {
     public interface IExaminationsDao
     {
-        List<Examination> GetExaminationListByTeacherCode(int id, int len);
+        List<Examination> GetExaminationListByTeacher(int id, int len);
     }
 }

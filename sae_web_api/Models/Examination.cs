@@ -10,5 +10,7 @@ namespace sae_web_api.Models
         public DateTime DateTime { get; set; }
         public int TotalMarks { get; set; }
         public string ReferenceAnswerSheet { get; set; }
+        public bool EvaluationStatus { get; set; }
+
     }
 }

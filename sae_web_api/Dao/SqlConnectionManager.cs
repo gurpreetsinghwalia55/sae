@@ -8,7 +8,7 @@ namespace sae_web_api.Dao
         {
             var connection = new NpgsqlConnection()
             {
-                ConnectionString = "Host=localhost;Username=postgres;Password=dadpc;Database=sae;SearchPath=sae"
+                ConnectionString = "Host=localhost;Username=postgres;Password=root;Database=sae;SearchPath=sae"
             };
             connection.Open();
             return connection;

@@ -71,31 +71,6 @@ language plpgsql;
 
 --------------------------------------------------------------------------------------------------------------------------------------
 
-drop function if exists teacherExaminationList;
-create or replace function teacherExaminationList(_tid int, _len int)
-  returns table(
-    id     int,
-    c_id    int,
-    etype  varchar,
-    dt     timestamp,
-    tmarks int,
-    rans   character varying,
-    cname  varchar,
-    ccode  varchar
-  ) as $$
-begin
-  if _len = 0 then
-    return query select e.*, c.course_name, c.course_code from examinations as e, courses as c where e.course_id = c.id and course_id in (select cid from courseslist(_tid)) order by e.datetime desc;
-  else
-    return query select e.*, c.course_name, c.course_code from examinations as e, courses as c where e.course_id = c.id and course_id in (select cid from courseslist(_tid)) order by e.datetime desc limit _len;
-  end if;
-
-end;
-$$
-language plpgsql;
-
---------------------------------------------------------------------------------------------------------------------------------
-
 drop function if exists getClassesByTeacherAndCourse;
 create or replace function getClassesByTeacherAndCourse(_tid int, _cid int)
   returns table(
@@ -118,3 +93,79 @@ $$
 language plpgsql
 strict
 immutable;
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+drop function if exists getExamEvaluationStatus;
+create or replace function getExamEvaluationStatus(_tid int, _eid int)
+  returns boolean as $$
+declare
+  ecount int;
+  scount int;
+  cid int;
+begin
+
+  select course_id into cid from examinations where id = _eid;
+
+  select count(s.*) into scount
+  from student_courses as s,
+       courses as c,
+       examinations as e,
+       student_classes as sc
+  where s.course_id = c.id
+    and e.course_id = c.id
+    and e.id = _eid
+    and sc.student_id = s.student_id
+    and sc.class_id in (select id from getClassesByTeacherAndCourse(_tid, 1));
+
+  select count(ev.*) into ecount
+  from evaluations as ev,
+       examinations as ex
+  where ex.id = ev.exam_id
+    and ex.id = _eid
+    and status = true;
+
+  return ecount = scount;
+end;
+$$
+language plpgsql
+strict
+immutable;
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+drop function if exists teacherExaminationList;
+create or replace function teacherExaminationList(_tid int, _len int)
+  returns table(
+    id     int,
+    c_id   int,
+    etype  varchar,
+    dt     timestamp,
+    tmarks int,
+    rans   character varying,
+    cname  varchar,
+    ccode  varchar
+  ) as $$
+begin
+  if _len = 0
+  then
+    return query select e.*, c.course_name, c.course_code
+                 from examinations as e,
+                      courses as c
+                 where e.course_id = c.id
+                   and course_id in (select cid from courseslist(_tid))
+                 order by e.datetime desc;
+  else
+    return query select e.*, c.course_name, c.course_code
+                 from examinations as e,
+                      courses as c
+                 where e.course_id = c.id
+                   and course_id in (select cid from courseslist(_tid))
+                 order by e.datetime desc
+                 limit _len;
+  end if;
+
+end;
+$$
+language plpgsql;
+
