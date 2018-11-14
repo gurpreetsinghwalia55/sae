@@ -12,7 +12,7 @@ CREATE TABLE "logins" (
 drop table if exists "teachers";
 CREATE TABLE "teachers" (
 	"id" serial NOT NULL UNIQUE,
-	"teacher_code" VARCHAR(10) NOT NULL,
+	"teacher_code" VARCHAR(50) NOT NULL UNIQUE,
 	"teacher_name" VARCHAR(40) NOT NULL,
 	"designation" VARCHAR(40) NOT NULL,
 	"contact" varchar(10) NOT NULL UNIQUE,
@@ -59,7 +59,6 @@ CREATE TABLE "teacher_classes" (
   OIDS=FALSE
 );
 
-
 drop table if exists "students";
 CREATE TABLE "students" (
 	"id" serial NOT NULL,
@@ -74,9 +73,10 @@ CREATE TABLE "students" (
 drop table if exists "student_courses";
 CREATE TABLE "student_courses" (
 	"id" serial NOT NULL,
-	"student_id" integer NOT NULL UNIQUE,
-	"course_id" integer NOT NULL UNIQUE,
-	CONSTRAINT student_courses_pk PRIMARY KEY ("id")
+	"student_id" integer NOT NULL,
+	"course_id" integer NOT NULL,
+	CONSTRAINT student_courses_pk PRIMARY KEY ("id"),
+	CONSTRAINT student_courses_uk UNIQUE ("student_id", "course_id")
 ) WITH (
   OIDS=FALSE
 );

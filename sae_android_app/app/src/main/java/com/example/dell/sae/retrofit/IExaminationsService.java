@@ -12,4 +12,7 @@ import retrofit2.http.Query;
 public interface IExaminationsService {
     @GET("examinations/teacher/{tid}")
     Call<List<Examination>> getExaminationsByTeacher(@Path("tid") int tid, @Query("len") int len);
+
+    @GET("examinations/teacher/{tid}/p")
+    Call<List<Examination>> getPendingExaminationsByTeacher(@Path("tid") int tid);
 }

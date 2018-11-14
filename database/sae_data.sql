@@ -12,6 +12,7 @@ INSERT INTO sae.courses (course_name, course_code) VALUES ('Computer Architectur
 INSERT INTO sae.courses (course_name, course_code) VALUES ('Artificial Intelligence', 'UCS521');
 INSERT INTO sae.courses (course_name, course_code) VALUES ('Software Engineering', 'UCS503');
 INSERT INTO sae.courses (course_name, course_code) VALUES ('Machine Learning', 'UCS501');
+INSERT INTO sae.courses (course_name, course_code) VALUES ('Theory of Computation', 'UCS701');
 
 INSERT INTO sae.students (student_rollno, student_name) VALUES (101783015, 'Gurpreet Singh Walia');
 INSERT INTO sae.students (student_rollno, student_name) VALUES (101783009, 'Barjinder Pal Singh');

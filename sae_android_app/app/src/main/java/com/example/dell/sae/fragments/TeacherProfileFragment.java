@@ -35,6 +35,7 @@ import com.example.dell.sae.models.Examination;
 import com.example.dell.sae.models.Teacher;
 import com.example.dell.sae.services.ExaminationsService;
 import com.example.dell.sae.services.TeachersService;
+import com.github.akashandroid90.imageletter.MaterialLetterIcon;
 
 import org.parceler.Parcels;
 
@@ -52,6 +53,7 @@ public class TeacherProfileFragment extends Fragment {
     private ProgressBar profileProgressBar, recentExamsProgressBar;
     private Teacher teacher;
     private TextView email, contact, designation;
+    private String teacherCode;
 
     public TeacherProfileFragment() {
         // Required empty public constructor
@@ -77,7 +79,7 @@ public class TeacherProfileFragment extends Fragment {
         nestedScrollView.setVisibility(View.INVISIBLE);
 
         TeachersService service = new TeachersService();
-        String teacherCode = getActivity().getIntent().getStringExtra(Constants.EXTRA_TEACHER_CODE);
+        teacherCode = getActivity().getIntent().getStringExtra(Constants.EXTRA_TEACHER_CODE);
         service.getTeacherByCode(teacherCode, new ITeacherCallback() {
             @Override
             public void onTeacher(Teacher teacher) {
@@ -100,6 +102,14 @@ public class TeacherProfileFragment extends Fragment {
 
     private void populateViews() {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(teacher.getName());
+
+        TextView navTeacherName = getActivity().findViewById(R.id.nav_view).findViewById(R.id.teacherName);
+        TextView navTeacherEmail = getActivity().findViewById(R.id.nav_view).findViewById(R.id.teacherEmail);
+        MaterialLetterIcon letterIcon = getActivity().findViewById(R.id.nav_view).findViewById(R.id.letterIcon);
+
+        navTeacherName.setText(teacher.getName());
+        navTeacherEmail.setText(teacher.getEmail());
+        letterIcon.setLetter((teacher.getName().charAt(0) + "").toUpperCase());
 
         email.setText(teacher.getEmail());
         contact.setText(teacher.getContact());

@@ -32,4 +32,24 @@ public class ExaminationsService {
             }
         });
     }
+
+    public void getPendingExaminationsByTeacher(int tid, final IExaminationsListCallback callback) {
+        Retrofit retrofit = RetrofitProvider.newInstance();
+        IExaminationsService service = retrofit.create(IExaminationsService.class);
+        service.getPendingExaminationsByTeacher(tid).enqueue(new Callback<List<Examination>>() {
+            @Override
+            public void onResponse(Call<List<Examination>> call, Response<List<Examination>> response) {
+                if (response.errorBody() != null) {
+                    callback.onError(new Exception(response.message()));
+                } else {
+                    callback.onExaminationsList(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Examination>> call, Throwable t) {
+                callback.onError(new Exception(t.toString()));
+            }
+        });
+    }
 }

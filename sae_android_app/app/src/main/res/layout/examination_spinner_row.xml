@@ -5,11 +5,11 @@
     android:layout_height="wrap_content"
     android:id="@+id/root"
     android:layout_marginBottom="8dp"
+    android:layout_centerInParent="true"
     android:background="?android:attr/selectableItemBackground"
     android:paddingTop="8dp">
 
     <LinearLayout
-        android:id="@+id/complaintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

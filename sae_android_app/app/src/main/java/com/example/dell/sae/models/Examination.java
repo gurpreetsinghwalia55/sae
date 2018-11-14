@@ -12,6 +12,7 @@ public class Examination {
     Date dateTime;
     int totalMarks;
     String referenceAnswerSheet;
+    boolean evaluationStatus;
 
     public boolean getEvaluationStatus() {
         return evaluationStatus;
@@ -20,8 +21,6 @@ public class Examination {
     public void setEvaluationStatus(boolean evaluationStatus) {
         this.evaluationStatus = evaluationStatus;
     }
-
-    boolean evaluationStatus;
 
     public int getId() {
         return id;

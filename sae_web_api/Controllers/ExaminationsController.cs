@@ -16,5 +16,12 @@ namespace sae_web_api.Controllers
             var dao = new ExaminationsDao();
             return dao.GetExaminationListByTeacher(id, len);
         }
+        
+        [HttpGet("teacher/{id}/p")]
+        public ActionResult<List<Examination>> GetPendingExaminationListByTeacherCode(int id)
+        {
+            var dao = new ExaminationsDao();
+            return dao.GetPendingExaminationListByTeacher(id);
+        }
     }
 }

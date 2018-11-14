@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using Npgsql;
 using sae_web_api.Dao.Interfaces;
 using sae_web_api.Models;
@@ -53,6 +55,11 @@ namespace sae_web_api.Dao.Impl
 
                 return examinations;
             }
+        }
+
+        public ActionResult<List<Examination>> GetPendingExaminationListByTeacher(int id)
+        {
+            return GetExaminationListByTeacher(id, 0).Where(e => !e.EvaluationStatus).ToList();
         }
     }
 }

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dell.sae.R;
+import com.example.dell.sae.Utils;
 import com.example.dell.sae.callbacks.ExamsListItemClickCallback;
 import com.example.dell.sae.models.Examination;
 
@@ -44,24 +45,7 @@ public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentE
         SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
         holder.dateTextView.setText(dateFormat.format(examination.getDateTime()));
         holder.timeTextView.setText(timeFormat.format(examination.getDateTime()));
-        int resId = 0;
-        switch (examination.getCourse().getCourseCode()) {
-            case "UCS608":
-                resId = R.drawable.ic_cloud_computing;
-                break;
-            case "UCS616":
-                resId = R.drawable.ic_ads;
-                break;
-            case "UCS503":
-                resId = R.drawable.ic_se;
-                break;
-            case "UCS507":
-                resId = R.drawable.ic_ca;
-                break;
-            case "UCS521":
-                resId = R.drawable.ic_ai;
-                break;
-        }
+        int resId = Utils.getSubjectIcon(examination.getCourse().getCourseCode());
         VectorDrawableCompat drawable = VectorDrawableCompat.create(context.getResources(), resId, context.getTheme());
         holder.subjectIconImageView.setImageDrawable(drawable);
 

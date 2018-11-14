@@ -24,15 +24,19 @@ import android.widget.Toast;
 import com.example.dell.sae.Constants;
 import com.example.dell.sae.Persistence;
 import com.example.dell.sae.R;
+import com.example.dell.sae.Utils;
 import com.example.dell.sae.adapters.ClassesSpinnerAdapter;
 import com.example.dell.sae.adapters.StudentsListRecyclerViewAdapter;
 import com.example.dell.sae.adapters.ViewPagerAdapter;
 import com.example.dell.sae.callbacks.IClassesListCallback;
 import com.example.dell.sae.callbacks.IEvaluationClassesListCallback;
+import com.example.dell.sae.callbacks.IEvaluationsListCallback;
 import com.example.dell.sae.fragments.StudentsListFragment;
+import com.example.dell.sae.models.Evaluation;
 import com.example.dell.sae.models.EvaluationClass;
 import com.example.dell.sae.models.Examination;
 import com.example.dell.sae.models.TeacherClass;
+import com.example.dell.sae.services.EvaluationsService;
 import com.example.dell.sae.services.TeachersService;
 
 import org.parceler.Parcels;
@@ -56,6 +60,8 @@ public class EvaluationDetailActivity extends AppCompatActivity {
     private AppCompatSpinner classSpinner;
     private ClassesSpinnerAdapter classAdapter;
     private List<EvaluationClass> classes;
+    private RecyclerView studentsListRecyclerView;
+    private TextView refSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,28 +89,12 @@ public class EvaluationDetailActivity extends AppCompatActivity {
         status.setText(examination.getEvaluationStatus() ? "Evaluated" : "Pending");
         status.setTextColor(ContextCompat.getColor(this, examination.getEvaluationStatus() ? R.color.green : R.color.red));
         subjectCode.setText(examination.getCourse().getCourseCode());
-        int resId = 0;
-        switch (examination.getCourse().getCourseCode()) {
-            case "UCS608":
-                resId = R.drawable.ic_cloud_computing;
-                break;
-            case "UCS616":
-                resId = R.drawable.ic_ads;
-                break;
-            case "UCS503":
-                resId = R.drawable.ic_se;
-                break;
-            case "UCS507":
-                resId = R.drawable.ic_ca;
-                break;
-            case "UCS521":
-                resId = R.drawable.ic_ai;
-                break;
-        }
+        int resId = Utils.getSubjectIcon(examination.getCourse().getCourseCode());
         subjectCodeIcon.setImageDrawable(VectorDrawableCompat.create(getResources(), resId, getTheme()));
         examType.setText(examination.getExaminationType());
         date.setText(new SimpleDateFormat("dd MMM, yyyy").format(examination.getDateTime()));
         time.setText(new SimpleDateFormat("h:mm a").format(examination.getDateTime()));
+        refSheet.setText(examination.getReferenceAnswerSheet());
 
         nestedScrollView.setVisibility(View.VISIBLE);
         evaluationDetailProgressBar.setVisibility(View.GONE);
@@ -120,7 +110,20 @@ public class EvaluationDetailActivity extends AppCompatActivity {
                 classSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        
+                        EvaluationsService service = new EvaluationsService();
+                        service.getClassEvaluationDetail(classes.get(i).getTeacherClass().getId(), examination.getId(), new IEvaluationsListCallback() {
+                            @Override
+                            public void onEvaluationsList(List<Evaluation> evaluationsList) {
+                                studentsListRecyclerView.setLayoutManager(new LinearLayoutManager(EvaluationDetailActivity.this, LinearLayoutManager.VERTICAL, false));
+                                StudentsListRecyclerViewAdapter adapter = new StudentsListRecyclerViewAdapter(evaluationsList);
+                                studentsListRecyclerView.setAdapter(adapter);
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                Toast.makeText(EvaluationDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
 
                     @Override
@@ -130,11 +133,6 @@ public class EvaluationDetailActivity extends AppCompatActivity {
                 });
 
                 classSpinner.setSelection(0);
-
-                RecyclerView studentsListRecyclerView = findViewById(R.id.studentsListRecyclerView);
-                studentsListRecyclerView.setLayoutManager(new LinearLayoutManager(EvaluationDetailActivity.this, LinearLayoutManager.VERTICAL, false));
-                StudentsListRecyclerViewAdapter adapter = new StudentsListRecyclerViewAdapter();
-                studentsListRecyclerView.setAdapter(adapter);
             }
 
             @Override
@@ -154,6 +152,8 @@ public class EvaluationDetailActivity extends AppCompatActivity {
         subjectCodeIcon = findViewById(R.id.subjectCodeIcon);
         status = findViewById(R.id.status);
         classSpinner = findViewById(R.id.classSpinner);
+        studentsListRecyclerView = findViewById(R.id.studentsListRecyclerView);
+        refSheet = findViewById(R.id.refSheet);
     }
 
     @Override

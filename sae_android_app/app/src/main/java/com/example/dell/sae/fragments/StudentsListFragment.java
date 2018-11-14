@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 
 import com.example.dell.sae.R;
 import com.example.dell.sae.adapters.StudentsListRecyclerViewAdapter;
+import com.example.dell.sae.models.Evaluation;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +33,7 @@ public class StudentsListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_students_list, container, false);
         RecyclerView studentsListRecyclerView = rootView.findViewById(R.id.studentsListRecyclerView);
         studentsListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        StudentsListRecyclerViewAdapter adapter = new StudentsListRecyclerViewAdapter();
+        StudentsListRecyclerViewAdapter adapter = new StudentsListRecyclerViewAdapter(new ArrayList<Evaluation>());
         studentsListRecyclerView.setAdapter(adapter);
         return rootView;
     }

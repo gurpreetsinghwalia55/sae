@@ -2,29 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp"
+    android:layout_marginTop="32dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:paddingTop="40dp"
-        android:src="@drawable/ic_boy" />
+    <com.github.akashandroid90.imageletter.MaterialLetterIcon
+        android:id="@+id/letterIcon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:letter_size="50"
+        app:letter_color="@android:color/white"
+        app:shape_color="@color/orange" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="Gurpreet Singh Walia"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:id="@+id/teacherName"
+        android:text="Sanmeet Bhatia"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         android:textColor="#212121" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="gwalia60_be17@thapar.edu"
+        android:id="@+id/teacherEmail"
+        android:layout_marginTop="2dp"
+        android:text="sanmeet.bhatia@thapar.edu"
         android:textColor="#757575" />
 
 </LinearLayout>

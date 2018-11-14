@@ -1,20 +1,29 @@
 package com.example.dell.sae.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dell.sae.R;
+import com.example.dell.sae.Utils;
+import com.example.dell.sae.models.Evaluation;
 import com.github.akashandroid90.imageletter.MaterialLetterIcon;
+
+import java.util.List;
 
 public class StudentsListRecyclerViewAdapter extends RecyclerView.Adapter<StudentsListRecyclerViewAdapter.MyViewHolder> {
     private Context context;
+    private List<Evaluation> evaluations;
+
+    public StudentsListRecyclerViewAdapter(List<Evaluation> evaluations) {
+        this.evaluations = evaluations;
+    }
 
     @NonNull
     @Override
@@ -25,83 +34,40 @@ public class StudentsListRecyclerViewAdapter extends RecyclerView.Adapter<Studen
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
-        switch (i % 10) {
-            case 0:
-                holder.studentName.setText("Gurpreet Singh Walia");
-                holder.rollno.setText("101783015");
-                holder.studentIcon.setLetter("G");
-                holder.studentIcon.setShapeColor(ContextCompat.getColor(context, R.color.lightBlue));
-                break;
-            case 1:
-                holder.studentName.setText("Barjinder Pal Singh");
-                holder.rollno.setText("101783009");
-                holder.studentIcon.setLetter("B");
-                holder.studentIcon.setShapeColor(ContextCompat.getColor(context, R.color.pink));
-                break;
-            case 2:
-                holder.studentName.setText("Gursukhab Singh");
-                holder.rollno.setText("101783016");
-                holder.studentIcon.setLetter("G");
-                holder.studentIcon.setShapeColor(ContextCompat.getColor(context, R.color.yellow));
-                break;
-            case 3:
-                holder.studentName.setText("Harjot Singh");
-                holder.rollno.setText("101783017");
-                holder.studentIcon.setLetter("H");
-                holder.studentIcon.setShapeColor(ContextCompat.getColor(context, R.color.orange));
-                break;
-            case 4:
-                holder.studentName.setText("Harjot Singh Jaswal");
-                holder.rollno.setText("101783018");
-                holder.studentIcon.setLetter("H");
-                holder.studentIcon.setShapeColor(ContextCompat.getColor(context, R.color.green));
-                break;
-            case 5:
-                holder.studentName.setText("Arshdeep Singh");
-                holder.rollno.setText("101783005");
-                holder.studentIcon.setLetter("A");
-                holder.studentIcon.setShapeColor(ContextCompat.getColor(context, R.color.red));
-                break;
-            case 6:
-                holder.studentName.setText("Abhishek Kumar");
-                holder.rollno.setText("101783003");
-                holder.studentIcon.setLetter("A");
-                holder.studentIcon.setShapeColor(ContextCompat.getColor(context, R.color.violet));
-                break;
-            case 7:
-                holder.studentName.setText("Sarthak Sharma");
-                holder.rollno.setText("101783037");
-                holder.studentIcon.setLetter("S");
-                holder.studentIcon.setShapeColor(ContextCompat.getColor(context, R.color.red));
-                break;
-            case 8:
-                holder.studentName.setText("Sutikshan Lakhanpal");
-                holder.rollno.setText("101783041");
-                holder.studentIcon.setLetter("S");
-                holder.studentIcon.setShapeColor(ContextCompat.getColor(context, R.color.lightBlue));
-                break;
-            case 9:
-                holder.studentName.setText("Bhargav Sood");
-                holder.rollno.setText("101783012");
-                holder.studentIcon.setLetter("B");
-                holder.studentIcon.setShapeColor(ContextCompat.getColor(context, R.color.orange));
-                break;
+        Evaluation evaluation = evaluations.get(i);
+        holder.studentName.setText(evaluation.getStudent().getName());
+        holder.rollno.setText(evaluation.getStudent().getRollno());
+        holder.studentIcon.setLetter((evaluation.getStudent().getName().charAt(0) + "").toUpperCase());
+        holder.studentIcon.setShapeColor(ContextCompat.getColor(context, Utils.getRandomColor()));
+        if (evaluation.getStatus()) {
+            holder.file.setText(evaluation.getAnswerSheet() + "_AnswerKey.pdf");
+            holder.file.setTypeface(Typeface.DEFAULT);
+            holder.marks.setText(evaluation.getMarksObtained() + "/" + evaluation.getExamination().getTotalMarks());
+            holder.marks.setTextColor(ContextCompat.getColor(context, Utils.getMarksColor(evaluation.getMarksObtained(), evaluation.getExamination().getTotalMarks())));
+        } else {
+            holder.file.setText("Not Evaluated Yet");
+            holder.file.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
+            holder.marks.setText("-");
+            holder.marks.setTextColor(ContextCompat.getColor(context, android.R.color.black));
         }
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return evaluations.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView studentName, rollno;
+    class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView studentName, rollno, file, marks;
         MaterialLetterIcon studentIcon;
+
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
             studentName = itemView.findViewById(R.id.studentName);
             rollno = itemView.findViewById(R.id.rollno);
             studentIcon = itemView.findViewById(R.id.studentIcon);
+            file = itemView.findViewById(R.id.file);
+            marks = itemView.findViewById(R.id.marks);
         }
     }
 }
