@@ -38,7 +38,7 @@ public class EvaluateExamActivity extends AppCompatActivity {
         examSpinner.setAdapter(examAdapter);
 
         AppCompatSpinner classSpinner = findViewById(R.id.classSpinner);
-        ArrayAdapter<String> classAdapter = new ArrayAdapter<String>(this, R.layout.class_spinner_item, new String[]{"3COE 20 - 23", "3COE 7 - 9"});
+        ArrayAdapter<String> classAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{"3COE 20 - 23", "3COE 7 - 9"});
         classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         classSpinner.setAdapter(classAdapter);
 
