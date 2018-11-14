@@ -1,5 +1,6 @@
 package com.example.dell.sae.retrofit;
 
+import com.example.dell.sae.models.EvaluationClass;
 import com.example.dell.sae.models.Teacher;
 import com.example.dell.sae.models.TeacherClass;
 
@@ -15,4 +16,7 @@ public interface ITeachersService {
 
     @GET("classes/teacher/{tid}/course/{cid}")
     Call<List<TeacherClass>> getClassesByTeacherAndCourse(@Path("tid") int tid, @Path("cid") int cid);
+
+    @GET("classes/teacher/{tid}/exam/{eid}")
+    Call<List<EvaluationClass>> getEvaluationClassesByTeacherAndExam(@Path("tid") int tid, @Path("eid") int eid);
 }

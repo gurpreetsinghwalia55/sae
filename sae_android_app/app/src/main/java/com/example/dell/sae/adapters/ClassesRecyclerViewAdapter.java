@@ -30,7 +30,7 @@ class ClassesRecyclerViewAdapter extends RecyclerView.Adapter<ClassesRecyclerVie
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
         TeacherClass teacherClass = classes.get(i);
-        String classText = teacherClass.getYear() + teacherClass.getBranch() + " " + teacherClass.getSectionFrom() + " - " + teacherClass.getSectionTo();
+        String classText = teacherClass.toString();
         myViewHolder.classTextView.setText(classText);
     }
 

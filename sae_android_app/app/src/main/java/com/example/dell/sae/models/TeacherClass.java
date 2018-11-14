@@ -46,4 +46,9 @@ public class TeacherClass {
     public void setBranch(String branch) {
         this.branch = branch;
     }
+
+    @Override
+    public String toString() {
+        return year + branch + " " + sectionFrom + " - " + sectionTo;
+    }
 }

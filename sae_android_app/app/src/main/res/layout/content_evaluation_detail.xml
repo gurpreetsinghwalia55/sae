@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:fillViewport="true"
+    android:fillViewport="false"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
@@ -199,20 +199,56 @@
 
         </LinearLayout>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/classesTabs"
-            style="@style/Widget.MaterialComponents.TabLayout"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="8dp"
+            android:background="#E0E0E0" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:tag="sticky"
-            app:tabGravity="fill"
-            app:tabMode="scrollable" />
+            android:layout_marginBottom="12dp"
+            android:letterSpacing="0.05"
+            android:text="STUDENTS"
+            android:textColor="#212121"
+            android:textSize="11sp"
+            android:textStyle="bold" />
 
-        <com.example.dell.sae.VerticalViewPager
-            android:id="@+id/classesViewPager"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/classIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/ic_presentation" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/classSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="12dp"
+                android:layout_toRightOf="@id/classIcon"
+                android:spinnerMode="dropdown" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="8dp"
+            android:nestedScrollingEnabled="false"
+            android:id="@+id/studentsListRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

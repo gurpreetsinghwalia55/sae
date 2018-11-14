@@ -8,9 +8,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,9 +24,13 @@ import android.widget.Toast;
 import com.example.dell.sae.Constants;
 import com.example.dell.sae.Persistence;
 import com.example.dell.sae.R;
+import com.example.dell.sae.adapters.ClassesSpinnerAdapter;
+import com.example.dell.sae.adapters.StudentsListRecyclerViewAdapter;
 import com.example.dell.sae.adapters.ViewPagerAdapter;
 import com.example.dell.sae.callbacks.IClassesListCallback;
+import com.example.dell.sae.callbacks.IEvaluationClassesListCallback;
 import com.example.dell.sae.fragments.StudentsListFragment;
+import com.example.dell.sae.models.EvaluationClass;
 import com.example.dell.sae.models.Examination;
 import com.example.dell.sae.models.TeacherClass;
 import com.example.dell.sae.services.TeachersService;
@@ -33,8 +42,6 @@ import java.util.List;
 
 public class EvaluationDetailActivity extends AppCompatActivity {
 
-    private TabLayout classesTabLayout;
-    private ViewPager classesViewPager;
     private ViewPagerAdapter viewPagerAdapter;
     private ProgressBar evaluationDetailProgressBar;
     private NestedScrollView nestedScrollView;
@@ -46,7 +53,9 @@ public class EvaluationDetailActivity extends AppCompatActivity {
     private TextView time;
     private TextView status;
     private ImageView subjectCodeIcon;
-//    private ProgressBar classesProgressBar;
+    private AppCompatSpinner classSpinner;
+    private ClassesSpinnerAdapter classAdapter;
+    private List<EvaluationClass> classes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +70,7 @@ public class EvaluationDetailActivity extends AppCompatActivity {
 
         prepareViews();
 
-        examination = (Examination) Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_EXAMINATION));
+        examination = Parcels.unwrap(getIntent().getParcelableExtra(Constants.EXTRA_EXAMINATION));
 
         populateViews();
     }
@@ -100,67 +109,42 @@ public class EvaluationDetailActivity extends AppCompatActivity {
         nestedScrollView.setVisibility(View.VISIBLE);
         evaluationDetailProgressBar.setVisibility(View.GONE);
 
-//        classesProgressBar.setVisibility(View.VISIBLE);
-        classesTabLayout.setVisibility(View.GONE);
-        classesViewPager.setVisibility(View.GONE);
-
         TeachersService service = new TeachersService();
-        service.getClassesByTeacherAndCourse(Persistence.teacher.getId(), examination.getCourse().getId(), new IClassesListCallback() {
+        service.getEvaluationClassesByTeacherAndExam(Persistence.teacher.getId(), examination.getId(), new IEvaluationClassesListCallback() {
             @Override
-            public void onClassesList(List<TeacherClass> classesList) {
-                viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-                for (TeacherClass teacherClass : classesList) {
-                    viewPagerAdapter.addFragment(new StudentsListFragment(), teacherClass.getYear() + teacherClass.getBranch() + " " + teacherClass.getSectionFrom() + " - " + teacherClass.getSectionTo());
-                }
-                classesViewPager.setAdapter(viewPagerAdapter);
-                classesTabLayout.setupWithViewPager(classesViewPager);
+            public void onEvaluationClassesList(List<EvaluationClass> classesList) {
+                classes = classesList;
+                classAdapter = new ClassesSpinnerAdapter(EvaluationDetailActivity.this, R.layout.class_spinner_item, classes);
+                classSpinner.setAdapter(classAdapter);
 
-                classesTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                classSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
-                        if (tab.getPosition() % 2 != 0) {
-                            classesTabLayout.setTabTextColors(Color.parseColor("#212121"), Color.parseColor("#23A24D"));
-                            classesTabLayout.setSelectedTabIndicatorColor(Color.parseColor("#23A24D"));
-                        } else {
-                            classesTabLayout.setTabTextColors(Color.parseColor("#212121"), Color.parseColor("#F44336"));
-                            classesTabLayout.setSelectedTabIndicatorColor(Color.parseColor("#F44336"));
-                        }
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        
                     }
 
                     @Override
-                    public void onTabUnselected(TabLayout.Tab tab) {
+                    public void onNothingSelected(AdapterView<?> adapterView) {
 
-                    }
-
-                    @Override
-                    public void onTabReselected(TabLayout.Tab tab) {
-                        if (tab.getPosition() % 2 != 0) {
-                            classesTabLayout.setTabTextColors(Color.parseColor("#212121"), Color.parseColor("#23A24D"));
-                            classesTabLayout.setSelectedTabIndicatorColor(Color.parseColor("#23A24D"));
-                        } else {
-                            classesTabLayout.setTabTextColors(Color.parseColor("#212121"), Color.parseColor("#F44336"));
-                            classesTabLayout.setSelectedTabIndicatorColor(Color.parseColor("#F44336"));
-                        }
                     }
                 });
-                classesTabLayout.getTabAt(0).select();
 
-//                classesProgressBar.setVisibility(View.GONE);
-                classesTabLayout.setVisibility(View.VISIBLE);
-                classesViewPager.setVisibility(View.VISIBLE);
+                classSpinner.setSelection(0);
+
+                RecyclerView studentsListRecyclerView = findViewById(R.id.studentsListRecyclerView);
+                studentsListRecyclerView.setLayoutManager(new LinearLayoutManager(EvaluationDetailActivity.this, LinearLayoutManager.VERTICAL, false));
+                StudentsListRecyclerViewAdapter adapter = new StudentsListRecyclerViewAdapter();
+                studentsListRecyclerView.setAdapter(adapter);
             }
 
             @Override
             public void onError(Exception e) {
                 Toast.makeText(EvaluationDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//                classesProgressBar.setVisibility(View.GONE);
             }
         });
     }
 
     private void prepareViews() {
-        classesTabLayout = findViewById(R.id.classesTabs);
-        classesViewPager = findViewById(R.id.classesViewPager);
         evaluationDetailProgressBar = findViewById(R.id.evaluationDetailProgressBar);
         nestedScrollView = findViewById(R.id.eval_detail_nsv);
         subjectCode = findViewById(R.id.subjectCode);
@@ -169,7 +153,7 @@ public class EvaluationDetailActivity extends AppCompatActivity {
         time = findViewById(R.id.time);
         subjectCodeIcon = findViewById(R.id.subjectCodeIcon);
         status = findViewById(R.id.status);
-//        classesProgressBar = findViewById(R.id.classesProgressBar);
+        classSpinner = findViewById(R.id.classSpinner);
     }
 
     @Override
