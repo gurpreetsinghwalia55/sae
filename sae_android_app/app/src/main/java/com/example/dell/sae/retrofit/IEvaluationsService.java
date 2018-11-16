@@ -11,4 +11,7 @@ import retrofit2.http.Path;
 public interface IEvaluationsService {
     @GET("evaluations/class/{cid}/exam/{eid}")
     Call<List<Evaluation>> getClassEvaluationDetail(@Path("cid") int cid, @Path("eid") int eid);
+
+    @GET("evaluations/class/{cid}/exam/{eid}/p")
+    Call<List<Evaluation>> getUnevaluatedStudents(@Path("cid") int cid, @Path("eid") int eid);
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Npgsql;
 using sae_web_api.Dao.Interfaces;
 using sae_web_api.Models;
@@ -66,6 +67,11 @@ namespace sae_web_api.Dao.Impl
 
                 return evaluations;
             }
+        }
+
+        public List<Evaluation> GetUnevaluatedStudents(int cid, int eid)
+        {
+            return GetClassEvaluationDetail(cid, eid).Where(e => !e.Status).ToList();
         }
     }
 }

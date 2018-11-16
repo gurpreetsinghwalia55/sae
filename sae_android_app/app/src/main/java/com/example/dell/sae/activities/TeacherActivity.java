@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.dell.sae.R;
 import com.example.dell.sae.fragments.CoursesFragment;
@@ -48,7 +49,8 @@ public class TeacherActivity extends AppCompatActivity implements NavigationView
             @Override
             public void run() {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.teacher_fragment_container, fragment);
+                transaction.replace(R.id.teacher_fragment_container, fragment, fragment.getClass().toString());
+                transaction.addToBackStack(fragment.getClass().toString());
                 transaction.commit();
             }
         }, 500);
@@ -92,4 +94,6 @@ public class TeacherActivity extends AppCompatActivity implements NavigationView
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

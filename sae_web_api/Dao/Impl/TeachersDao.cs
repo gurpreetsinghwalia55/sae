@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using sae_web_api.Dao.Interfaces;
@@ -34,6 +35,11 @@ namespace sae_web_api.Dao.Impl
             }
         }
 
+        public List<EvaluationClass> GetPendingEvaluationClassesByTeacherAndExam(int tid, int eid)
+        {
+            return GetEvaluationClassesByTeacherAndExam(tid, eid).Where(c => !c.EvaluationStatus).ToList();
+        }
+        
         public List<EvaluationClass> GetEvaluationClassesByTeacherAndExam(int tid, int eid)
         {
             using (var classConnection = SqlConnectionManager.GetConnection())

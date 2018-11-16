@@ -16,5 +16,12 @@ namespace sae_web_api.Controllers
             var dao = new EvaluationsDao();
             return dao.GetClassEvaluationDetail(cid, eid);
         }
+        
+        [HttpGet("class/{cid}/exam/{eid}/p")]
+        public ActionResult<List<Evaluation>> GetUnevaluatedStudents(int cid, int eid)
+        {
+            var dao = new EvaluationsDao();
+            return dao.GetUnevaluatedStudents(cid, eid);
+        }
     }
 }

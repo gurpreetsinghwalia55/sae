@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.github.akashandroid90.imageletter.MaterialLetterIcon
+        android:id="@+id/studentIcon"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:layout_weight="1.5"
+        app:letter="G"
+        app:letter_color="@android:color/white"
+        app:shape_color="#F7941E" />
+
+    <LinearLayout
+        android:id="@+id/textLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="6"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/studentName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Gurpreet Singh Walia"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/rollno"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="101783015" />
+
+        <TextView
+            android:id="@+id/file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:ellipsize="middle"
+            android:singleLine="true"
+            android:text="AnswerKey_101783015_UCS608_MST_24_09_2018.pdf" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/marks"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:text="16/25"
+        android:textColor="@color/orange"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="2.5" />
+
+</LinearLayout>

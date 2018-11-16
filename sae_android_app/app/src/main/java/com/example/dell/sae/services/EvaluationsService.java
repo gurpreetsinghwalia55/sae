@@ -32,4 +32,24 @@ public class EvaluationsService {
             }
         });
     }
+
+    public void getUnevaluatedStudents(int cid, int eid, final IEvaluationsListCallback callback) {
+        Retrofit retrofit = RetrofitProvider.newInstance();
+        IEvaluationsService service = retrofit.create(IEvaluationsService.class);
+        service.getUnevaluatedStudents(cid, eid).enqueue(new Callback<List<Evaluation>>() {
+            @Override
+            public void onResponse(Call<List<Evaluation>> call, Response<List<Evaluation>> response) {
+                if (response.errorBody() != null) {
+                    callback.onError(new Exception(response.message()));
+                } else {
+                    callback.onEvaluationsList(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Evaluation>> call, Throwable t) {
+                callback.onError(new Exception(t.toString()));
+            }
+        });
+    }
 }

@@ -19,4 +19,9 @@ public class EvaluationClass {
     public void setEvaluationStatus(boolean evaluationStatus) {
         this.evaluationStatus = evaluationStatus;
     }
+
+    @Override
+    public String toString() {
+        return teacherClass.getYear() + teacherClass.getBranch() + " " + teacherClass.getSectionFrom() + " - " + teacherClass.getSectionTo();
+    }
 }

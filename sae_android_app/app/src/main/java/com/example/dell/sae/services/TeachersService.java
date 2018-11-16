@@ -77,4 +77,24 @@ public class TeachersService {
             }
         });
     }
+
+    public void getPendingEvaluationClassesByTeacherAndExam(int tid, int eid, final IEvaluationClassesListCallback callback) {
+        Retrofit retrofit = RetrofitProvider.newInstance();
+        ITeachersService service = retrofit.create(ITeachersService.class);
+        service.getPendingEvaluationClassesByTeacherAndExam(tid, eid).enqueue(new Callback<List<EvaluationClass>>() {
+            @Override
+            public void onResponse(Call<List<EvaluationClass>> call, Response<List<EvaluationClass>> response) {
+                if (response.errorBody() != null) {
+                    callback.onError(new Exception(response.message()));
+                } else {
+                    callback.onEvaluationClassesList(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<EvaluationClass>> call, Throwable t) {
+                callback.onError(new Exception(t.toString()));
+            }
+        });
+    }
 }

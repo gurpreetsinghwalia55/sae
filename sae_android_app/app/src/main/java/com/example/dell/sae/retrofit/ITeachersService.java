@@ -19,4 +19,7 @@ public interface ITeachersService {
 
     @GET("classes/teacher/{tid}/exam/{eid}")
     Call<List<EvaluationClass>> getEvaluationClassesByTeacherAndExam(@Path("tid") int tid, @Path("eid") int eid);
+
+    @GET("classes/teacher/{tid}/exam/{eid}/p")
+    Call<List<EvaluationClass>> getPendingEvaluationClassesByTeacherAndExam(@Path("tid") int tid, @Path("eid") int eid);
 }
