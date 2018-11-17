@@ -57,9 +57,29 @@ namespace sae_web_api.Dao.Impl
             }
         }
 
-        public ActionResult<List<Examination>> GetPendingExaminationListByTeacher(int id)
+        public List<Examination> GetPendingExaminationListByTeacher(int id)
         {
             return GetExaminationListByTeacher(id, 0).Where(e => !e.EvaluationStatus).ToList();
+        }
+
+        public string AddReferenceAnswerSheet(int eid, string filePath)
+        {
+            using (var connection = SqlConnectionManager.GetConnection())
+            using (var command = new NpgsqlCommand())
+            {
+                command.Connection = connection;
+                command.CommandText = "select * from addReferenceAnswerSheet(@eid, @filePath)";
+                command.Parameters.AddWithValue("@eid", eid);
+                command.Parameters.AddWithValue("@filePath", filePath);
+
+                var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    return reader.GetString(0);
+                }
+
+                return null;
+            }
         }
     }
 }

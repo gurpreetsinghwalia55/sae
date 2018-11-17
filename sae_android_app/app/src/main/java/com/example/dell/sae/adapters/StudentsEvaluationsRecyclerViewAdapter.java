@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dell.sae.R;
@@ -39,17 +40,8 @@ public class StudentsEvaluationsRecyclerViewAdapter extends RecyclerView.Adapter
         holder.rollno.setText(evaluation.getStudent().getRollno());
         holder.studentIcon.setLetter((evaluation.getStudent().getName().charAt(0) + "").toUpperCase());
         holder.studentIcon.setShapeColor(ContextCompat.getColor(context, Utils.getRandomColor()));
-        if (evaluation.getStatus()) {
-            holder.file.setText(evaluation.getAnswerSheet() + "_AnswerKey.pdf");
-            holder.file.setTypeface(Typeface.DEFAULT);
-            holder.marks.setText(evaluation.getMarksObtained() + "/" + evaluation.getExamination().getTotalMarks());
-            holder.marks.setTextColor(ContextCompat.getColor(context, Utils.getMarksColor(evaluation.getMarksObtained(), evaluation.getExamination().getTotalMarks())));
-        } else {
-            holder.file.setText("Not Evaluated Yet");
-            holder.file.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
-            holder.marks.setText("-");
-            holder.marks.setTextColor(ContextCompat.getColor(context, android.R.color.black));
-        }
+        holder.file.setText("Not Evaluated Yet");
+        holder.file.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
     }
 
     @Override
@@ -57,9 +49,10 @@ public class StudentsEvaluationsRecyclerViewAdapter extends RecyclerView.Adapter
         return evaluations.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView studentName, rollno, file, marks;
+    class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView studentName, rollno, file;
         MaterialLetterIcon studentIcon;
+        ImageView uploadButton;
 
         MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,7 +60,7 @@ public class StudentsEvaluationsRecyclerViewAdapter extends RecyclerView.Adapter
             rollno = itemView.findViewById(R.id.rollno);
             studentIcon = itemView.findViewById(R.id.studentIcon);
             file = itemView.findViewById(R.id.file);
-            marks = itemView.findViewById(R.id.marks);
+            uploadButton = itemView.findViewById(R.id.uploadButton);
         }
     }
 }

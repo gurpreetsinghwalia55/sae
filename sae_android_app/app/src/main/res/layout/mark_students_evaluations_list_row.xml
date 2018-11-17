@@ -52,15 +52,13 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/marks"
+    <ImageView
+        android:id="@+id/uploadButton"
         android:layout_width="0dp"
-        android:gravity="center"
-        android:text="16/25"
-        android:textColor="@color/orange"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:layout_height="wrap_content"
+        android:layout_weight="2.5"
+        android:layout_height="24dp"
         android:layout_gravity="center"
-        android:layout_weight="2.5" />
+        android:src="@drawable/ic_file_upload_black_24dp" />
+
 
 </LinearLayout>

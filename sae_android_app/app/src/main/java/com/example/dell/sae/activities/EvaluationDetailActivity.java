@@ -1,11 +1,10 @@
 package com.example.dell.sae.activities;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
+import android.os.Environment;
+import android.support.design.button.MaterialButton;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
@@ -15,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,19 +26,20 @@ import com.example.dell.sae.Utils;
 import com.example.dell.sae.adapters.ClassesSpinnerAdapter;
 import com.example.dell.sae.adapters.StudentsListRecyclerViewAdapter;
 import com.example.dell.sae.adapters.ViewPagerAdapter;
-import com.example.dell.sae.callbacks.IClassesListCallback;
 import com.example.dell.sae.callbacks.IEvaluationClassesListCallback;
 import com.example.dell.sae.callbacks.IEvaluationsListCallback;
-import com.example.dell.sae.fragments.StudentsListFragment;
+import com.example.dell.sae.callbacks.IFileDownloadCallback;
 import com.example.dell.sae.models.Evaluation;
 import com.example.dell.sae.models.EvaluationClass;
 import com.example.dell.sae.models.Examination;
-import com.example.dell.sae.models.TeacherClass;
 import com.example.dell.sae.services.EvaluationsService;
+import com.example.dell.sae.services.FileDownloaderService;
 import com.example.dell.sae.services.TeachersService;
 
 import org.parceler.Parcels;
 
+import java.io.File;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -62,6 +61,7 @@ public class EvaluationDetailActivity extends AppCompatActivity {
     private List<EvaluationClass> classes;
     private RecyclerView studentsListRecyclerView;
     private TextView refSheet;
+    private MaterialButton openRefSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +94,34 @@ public class EvaluationDetailActivity extends AppCompatActivity {
         examType.setText(examination.getExaminationType());
         date.setText(new SimpleDateFormat("dd MMM, yyyy").format(examination.getDateTime()));
         time.setText(new SimpleDateFormat("h:mm a").format(examination.getDateTime()));
-        refSheet.setText(examination.getReferenceAnswerSheet());
+        final String fileName = examination.getReferenceAnswerSheet().substring(examination.getReferenceAnswerSheet().lastIndexOf("/") + 1);
+        refSheet.setText(fileName);
+
+        openRefSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (examination.getReferenceAnswerSheet() != null & !examination.getReferenceAnswerSheet().isEmpty()) {
+                    File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + fileName);
+                    if (!file.exists()) {
+                        FileDownloaderService service = new FileDownloaderService();
+                        service.downloadFile(Constants.API_IP_ADDRESS + examination.getReferenceAnswerSheet(), new IFileDownloadCallback() {
+                            @Override
+                            public void onFile(InputStream fileStream) {
+                                File file = Utils.writeFileToDisk(EvaluationDetailActivity.this, fileName, fileStream);
+                                Utils.openFile(EvaluationDetailActivity.this, file);
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                Toast.makeText(EvaluationDetailActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        Utils.openFile(EvaluationDetailActivity.this, file);
+                    }
+                }
+            }
+        });
 
         nestedScrollView.setVisibility(View.VISIBLE);
         evaluationDetailProgressBar.setVisibility(View.GONE);
@@ -154,6 +181,7 @@ public class EvaluationDetailActivity extends AppCompatActivity {
         classSpinner = findViewById(R.id.classSpinner);
         studentsListRecyclerView = findViewById(R.id.studentsListRecyclerView);
         refSheet = findViewById(R.id.refSheet);
+        openRefSheet = findViewById(R.id.openRefSheet);
     }
 
     @Override

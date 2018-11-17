@@ -253,6 +253,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:id="@+id/openRefSheet"
                     android:layout_marginRight="8dp"
                     android:textColor="?colorPrimary"
                     android:layout_weight="4"

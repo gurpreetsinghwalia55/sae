@@ -4,8 +4,12 @@ import com.example.dell.sae.models.Examination;
 
 import java.util.List;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -15,4 +19,8 @@ public interface IExaminationsService {
 
     @GET("examinations/teacher/{tid}/p")
     Call<List<Examination>> getPendingExaminationsByTeacher(@Path("tid") int tid);
+
+    @Multipart
+    @POST("examinations/ref-ans-sheet/{eid}")
+    Call<String> uploadReferenceAnswerSheet(@Path("eid") int eid, @Part("file") RequestBody file, @Part("name") String name);
 }

@@ -100,13 +100,14 @@ drop function if exists getExamEvaluationStatus;
 create or replace function getExamEvaluationStatus(_tid int, _eid int)
   returns boolean as $$
 declare
-  c_row classes%rowtype;
+  c_row  classes%rowtype;
   status boolean;
 begin
 
   for c_row in select * from getClassesByTeacherAndExam(_tid, _eid) loop
     select getClassEvaluationStatus(c_row.id, _eid) into status;
-    if status = false then
+    if status = false
+    then
       return false;
     end if;
   end loop;
@@ -260,3 +261,13 @@ immutable;
 
 --------------------------------------------------------------------------------------------------------------------------------------
 
+drop function if exists addReferenceAnswerSheet;
+create or replace function addReferenceAnswerSheet(_eid int, _file text)
+  returns text as $$
+begin
+  update examinations set ref_ans_sheet = _file where id = _eid;
+  return _file;
+end;
+$$
+language plpgsql
+security definer;

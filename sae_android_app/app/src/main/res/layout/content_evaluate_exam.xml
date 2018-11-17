@@ -71,16 +71,16 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="6"
-                    android:text="AnswerKey_UCS608_MST_24_09_18.pdf"
                     android:layout_marginRight="12dp"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                    android:textColor="?android:attr/textColorPrimary"
+                    android:textColor="#2196F3"
                     android:textSize="16sp" />
 
                 <android.support.design.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:id="@+id/uploadRefSheet"
                     android:layout_gravity="center"
                     android:layout_marginRight="8dp"
                     app:rippleColor="?colorPrimary"
