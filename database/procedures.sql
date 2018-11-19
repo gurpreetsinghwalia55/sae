@@ -271,3 +271,37 @@ end;
 $$
 language plpgsql
 security definer;
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+drop function if exists addStudentAnswerSheet;
+create or replace function addStudentAnswerSheet(_eid int, _file text)
+  returns text as $$
+begin
+  update evaluations set ans_sheet = _file where id = _eid;
+  return _file;
+end;
+$$
+language plpgsql
+security definer;
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+drop function if exists createEvaluation;
+create or replace function createEvaluation(
+  _eid int,
+  _tid int,
+  _sid int,
+  _m   int,
+  _d   timestamp,
+  _ans text
+)
+  returns boolean as $$
+begin
+  insert into evaluations (exam_id, teacher_id, student_id, marks_obtained, datetime, ans_sheet, status)
+  values (_eid, _tid, _sid, _m, _d, _ans, true);
+  return true;
+end;
+$$
+language plpgsql
+security definer;

@@ -88,7 +88,7 @@ public class RecentExamsRecyclerViewAdapter extends RecyclerView.Adapter<RecentE
             subjectNameTextView = itemView.findViewById(R.id.subjectName);
             subjectCodeTextView = itemView.findViewById(R.id.subjectCode);
             examTypeTextView = itemView.findViewById(R.id.examType);
-            dateTextView = itemView.findViewById(R.id.date);
+            dateTextView = itemView.findViewById(R.id.dateTime);
             timeTextView = itemView.findViewById(R.id.time);
             evalStatus = itemView.findViewById(R.id.evalStatus);
         }

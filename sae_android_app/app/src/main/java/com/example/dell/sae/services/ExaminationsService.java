@@ -1,18 +1,14 @@
 package com.example.dell.sae.services;
 
-import android.util.Log;
-
 import com.example.dell.sae.callbacks.IExaminationsListCallback;
-import com.example.dell.sae.callbacks.IReferenceAnswerSheetCallback;
+import com.example.dell.sae.callbacks.IAnswerSheetCallback;
+import com.example.dell.sae.models.AnswerSheet;
 import com.example.dell.sae.models.Examination;
 import com.example.dell.sae.retrofit.IExaminationsService;
 import com.example.dell.sae.retrofit.RetrofitProvider;
 
-import java.io.File;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,22 +35,21 @@ public class ExaminationsService {
         });
     }
 
-    public void uploadReferenceAnswerSheet(int eid, String fileName, File file, final IReferenceAnswerSheetCallback callback) {
-        RequestBody body = RequestBody.create(MediaType.parse("application/pdf"), file);
+    public void uploadReferenceAnswerSheet(int eid, AnswerSheet sheet, final IAnswerSheetCallback callback) {
         Retrofit retrofit = RetrofitProvider.newInstance();
         IExaminationsService service = retrofit.create(IExaminationsService.class);
-        service.uploadReferenceAnswerSheet(eid, body, fileName).enqueue(new Callback<String>() {
+        service.uploadReferenceAnswerSheet(eid, sheet).enqueue(new Callback<AnswerSheet>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<AnswerSheet> call, Response<AnswerSheet> response) {
                 if (response.isSuccessful()) {
-                    callback.onSheet(response.body());
+                    callback.onAnswerSheet(response.body());
                 } else {
                     callback.onError(new Exception(response.message()));
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<AnswerSheet> call, Throwable t) {
                 callback.onError(new Exception(t.toString()));
             }
         });
@@ -75,6 +70,26 @@ public class ExaminationsService {
 
             @Override
             public void onFailure(Call<List<Examination>> call, Throwable t) {
+                callback.onError(new Exception(t.toString()));
+            }
+        });
+    }
+
+    public void uploadStudentAnswerSheet(int evalId, AnswerSheet sheet, final IAnswerSheetCallback callback) {
+        Retrofit retrofit = RetrofitProvider.newInstance();
+        IExaminationsService service = retrofit.create(IExaminationsService.class);
+        service.uploadStudentAnswerSheet(evalId, sheet).enqueue(new Callback<AnswerSheet>() {
+            @Override
+            public void onResponse(Call<AnswerSheet> call, Response<AnswerSheet> response) {
+                if (response.isSuccessful()) {
+                    callback.onAnswerSheet(response.body());
+                } else {
+                    callback.onError(new Exception(response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AnswerSheet> call, Throwable t) {
                 callback.onError(new Exception(t.toString()));
             }
         });

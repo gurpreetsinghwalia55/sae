@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Npgsql;
+using NpgsqlTypes;
 using sae_web_api.Dao.Interfaces;
 using sae_web_api.Models;
 
@@ -72,6 +73,24 @@ namespace sae_web_api.Dao.Impl
         public List<Evaluation> GetUnevaluatedStudents(int cid, int eid)
         {
             return GetClassEvaluationDetail(cid, eid).Where(e => !e.Status).ToList();
+        }
+
+        public void CreateEvaluation(Evaluation evaluation)
+        {
+            using (var connection = SqlConnectionManager.GetConnection())
+            using (var command = new NpgsqlCommand())
+            {
+                command.Connection = connection;
+                command.CommandText = "select * from createEvaluation(@eid, @tid, @sid, @m, @d, @ans)";
+                command.Parameters.AddWithValue("@eid", evaluation.Examination.Id);
+                command.Parameters.AddWithValue("@tid", evaluation.Teacher.Id);
+                command.Parameters.AddWithValue("@sid", evaluation.Student.Id);
+                command.Parameters.AddWithValue("@m", evaluation.MarksObtained);
+                command.Parameters.Add("@d", NpgsqlDbType.Timestamp).Value = evaluation.DateTime;
+                command.Parameters.AddWithValue("@ans", evaluation.AnswerSheet);
+
+                command.ExecuteReader();
+            }
         }
     }
 }

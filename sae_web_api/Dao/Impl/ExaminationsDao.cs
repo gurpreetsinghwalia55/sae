@@ -81,5 +81,25 @@ namespace sae_web_api.Dao.Impl
                 return null;
             }
         }
+
+        public string AddStudentAnswerSheet(int eid, string s)
+        {
+            using (var connection = SqlConnectionManager.GetConnection())
+            using (var command = new NpgsqlCommand())
+            {
+                command.Connection = connection;
+                command.CommandText = "select * from addStudentAnswerSheet(@eid, @filePath)";
+                command.Parameters.AddWithValue("@eid", eid);
+                command.Parameters.AddWithValue("@filePath", s);
+
+                var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    return reader.GetString(0);
+                }
+
+                return null;
+            }
+        }
     }
 }

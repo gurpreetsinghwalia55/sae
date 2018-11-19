@@ -5,13 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.dell.sae.activities.EvaluationDetailActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -64,6 +68,12 @@ public class Utils {
         return R.color.mat_green;
     }
 
+    public static boolean deleteFile(String name) {
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + name);
+        if (file.exists()) return file.delete();
+        return false;
+    }
+
     public static File writeFileToDisk(Context context, String fileName, InputStream fileStream) {
         try {
             File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + fileName);
@@ -112,5 +122,40 @@ public class Utils {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(context, "No PDF Reader installed!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static String uriToBase64(Context context, Uri uri) throws IOException {
+        if (uri == null) return "";
+        String uriString = uri.toString();
+        InputStream inputStream = null;
+        if (uriString.startsWith("content")) {
+            inputStream = context.getContentResolver().openInputStream(uri);
+        } else if (uriString.startsWith("file")) {
+            inputStream = new FileInputStream(new File(uriString));
+        }
+
+        if (inputStream != null) {
+            byte[] bytes = toByteArray(inputStream);
+            return Base64.encodeToString(bytes, Base64.DEFAULT);
+        }
+
+        return "";
+    }
+
+    private static byte[] toByteArray(@NonNull InputStream inputStream) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+        int nRead;
+        byte[] data = new byte[16384];
+
+        while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
+        }
+
+        byte[] bytes = buffer.toByteArray();
+        buffer.flush();
+        inputStream.close();
+        buffer.close();
+        return bytes;
     }
 }

@@ -98,7 +98,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:text="18/10/18"
-                android:id="@+id/date"
+                android:id="@+id/dateTime"
                 android:layout_height="wrap_content" />
 
             <TextView

@@ -58,7 +58,7 @@ public class ExaminationSpinnerAdapter extends ArrayAdapter<Examination> {
         name = view.findViewById(R.id.subjectName);
         code = view.findViewById(R.id.subjectCode);
         examType = view.findViewById(R.id.examType);
-        date = view.findViewById(R.id.date);
+        date = view.findViewById(R.id.dateTime);
         time = view.findViewById(R.id.time);
 
         Examination exam = exams.get(position);

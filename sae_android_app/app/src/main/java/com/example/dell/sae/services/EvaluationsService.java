@@ -1,6 +1,7 @@
 package com.example.dell.sae.services;
 
 import com.example.dell.sae.callbacks.IEvaluationsListCallback;
+import com.example.dell.sae.callbacks.IEvaluationsResultCallback;
 import com.example.dell.sae.models.Evaluation;
 import com.example.dell.sae.retrofit.IEvaluationsService;
 import com.example.dell.sae.retrofit.RetrofitProvider;
@@ -48,6 +49,26 @@ public class EvaluationsService {
 
             @Override
             public void onFailure(Call<List<Evaluation>> call, Throwable t) {
+                callback.onError(new Exception(t.toString()));
+            }
+        });
+    }
+
+    public void evaluateStudents(List<Evaluation> evaluations, final IEvaluationsResultCallback callback) {
+        Retrofit retrofit = RetrofitProvider.newInstance();
+        IEvaluationsService service = retrofit.create(IEvaluationsService.class);
+        service.evaluateStudents(evaluations).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    callback.onResult(Boolean.parseBoolean(response.body()));
+                } else {
+                    callback.onError(new Exception(response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
                 callback.onError(new Exception(t.toString()));
             }
         });

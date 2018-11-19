@@ -174,7 +174,7 @@ public class EvaluationDetailActivity extends AppCompatActivity {
         nestedScrollView = findViewById(R.id.eval_detail_nsv);
         subjectCode = findViewById(R.id.subjectCode);
         examType = findViewById(R.id.examType);
-        date = findViewById(R.id.date);
+        date = findViewById(R.id.dateTime);
         time = findViewById(R.id.time);
         subjectCodeIcon = findViewById(R.id.subjectCodeIcon);
         status = findViewById(R.id.status);

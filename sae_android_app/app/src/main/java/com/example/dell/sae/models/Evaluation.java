@@ -11,7 +11,7 @@ public class Evaluation {
     Teacher teacher;
     Student student;
     int marksObtained;
-    Date date;
+    Date dateTime;
     String answerSheet;
     boolean status;
 
@@ -55,12 +55,12 @@ public class Evaluation {
         this.marksObtained = marksObtained;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getAnswerSheet() {

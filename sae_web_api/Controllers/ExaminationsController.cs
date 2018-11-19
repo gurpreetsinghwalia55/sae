@@ -13,6 +13,7 @@ namespace sae_web_api.Controllers
     public class ExaminationsController : ControllerBase
     {
         private readonly string REFERENCE_ANS_SHEET_UPLOAD_PATH = "D:\\sae\\ref_ans_sheets";
+        private readonly string STUDENT_ANS_SHEET_UPLOAD_PATH = "D:\\sae\\student_ans_sheets";
 
         [HttpGet("teacher/{id}")]
         public ActionResult<List<Examination>> GetExaminationListByTeacherCode(int id,
@@ -30,21 +31,55 @@ namespace sae_web_api.Controllers
         }
 
         [HttpPost("ref-ans-sheet/{eid}")]
-        public ActionResult<string> UploadReferenceAnswerSheet(int eid, [FromForm(Name = "file")] IFormFile file, [FromForm(Name = "name")] string name)
+        public ActionResult<AnswerSheet> UploadReferenceAnswerSheet(int eid, [FromBody] AnswerSheet sheet)
         {
-            name = name.Replace("\"", " ").Trim();
             Directory.CreateDirectory(REFERENCE_ANS_SHEET_UPLOAD_PATH);
-            using (var stream = new FileStream(Path.Combine(REFERENCE_ANS_SHEET_UPLOAD_PATH, name), FileMode.Create))
+            if (sheet?.FileData.Length > 0)
             {
-                file.CopyTo(stream);
+                var filePath = Path.Combine(REFERENCE_ANS_SHEET_UPLOAD_PATH, sheet.FileName);
+                var bytes = Convert.FromBase64String(sheet.FileData);
+                System.IO.File.WriteAllBytes(filePath, bytes);
+                
+                var dao = new ExaminationsDao();
+                string path = dao.AddReferenceAnswerSheet(eid, $"/api/examinations/ref-ans-sheet/get/{sheet.FileName}");
+                sheet.FileData = "";
+                sheet.FilePath = path;
+                return sheet;
             }
-
-            var dao = new ExaminationsDao();
-            return dao.AddReferenceAnswerSheet(eid, $"/api/examinations/ref-ans-sheet/get/{name}").Replace("\"", " ").Trim();
+            
+            return new AnswerSheet();
+        }
+        
+        [HttpPost("student-ans-sheet/{eid}")]
+        public ActionResult<AnswerSheet> UploadStudentAnswerSheet(int eid, [FromBody] AnswerSheet sheet)
+        {
+            Directory.CreateDirectory(STUDENT_ANS_SHEET_UPLOAD_PATH);
+            if (sheet?.FileData.Length > 0)
+            {
+                var filePath = Path.Combine(STUDENT_ANS_SHEET_UPLOAD_PATH, sheet.FileName);
+                var bytes = Convert.FromBase64String(sheet.FileData);
+                System.IO.File.WriteAllBytes(filePath, bytes);
+                
+                var dao = new ExaminationsDao();
+                string path = dao.AddStudentAnswerSheet(eid, $"/api/examinations/student-ans-sheet/get/{sheet.FileName}");
+                sheet.FileData = "";
+                sheet.FilePath = path;
+                return sheet;
+            }
+            
+            return new AnswerSheet();
         }
 
         [HttpGet("ref-ans-sheet/get/{fileName}")]
         public IActionResult GetReferenceAnswerSheet(string fileName)
+        {
+            var filePath = Path.Combine(REFERENCE_ANS_SHEET_UPLOAD_PATH, fileName);
+            var stream = System.IO.File.OpenRead(filePath);
+            return File(stream, "application/pdf");
+        }
+        
+        [HttpGet("student-ans-sheet/get/{fileName}")]
+        public IActionResult GetStudentAnswerSheet(string fileName)
         {
             var filePath = Path.Combine(REFERENCE_ANS_SHEET_UPLOAD_PATH, fileName);
             var stream = System.IO.File.OpenRead(filePath);
